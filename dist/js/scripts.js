@@ -1,9 +1,9 @@
 /*!
-    * Start Bootstrap - Resume v7.0.0 (https://github.com/Pedrojok01/Pedrojok01.github.io)
-    * Copyright 2013-2023 Pedrojok01
-    * Licensed under MIT (https://github.com/Pedrojok01/startbootstrap-resume/blob/master/LICENSE)
-    */
-    // Wrap the code in an IIFE to avoid polluting the global namespace
+ * Start Bootstrap - Resume v7.0.0 (https://github.com/Pedrojok01/Pedrojok01.github.io)
+ * Copyright 2013-2023 Pedrojok01
+ * Licensed under MIT (https://github.com/Pedrojok01/startbootstrap-resume/blob/master/LICENSE)
+ */
+// Wrap the code in an IIFE to avoid polluting the global namespace
 (function ($) {
   "use strict";
 
