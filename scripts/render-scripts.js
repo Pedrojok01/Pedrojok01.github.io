@@ -1,25 +1,54 @@
-"use strict";
-const fs = require("fs");
-const packageJSON = require("../package.json");
-const path = require("path");
-const sh = require("shelljs");
+import { promises as fs } from "fs";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
 
-module.exports = function renderScripts() {
-  const sourcePath = path.resolve(path.dirname(__filename), "../src/js/scripts.js");
-  const destPath = path.resolve(path.dirname(__filename), "../dist/js/scripts.js");
+import pkg from "shelljs";
 
-  const copyright = `/*!
-    * Start Bootstrap - ${packageJSON.title} v${packageJSON.version} (${packageJSON.homepage})
-    * Copyright 2013-${new Date().getFullYear()} ${packageJSON.author}
-    * Licensed under ${packageJSON.license} (https://github.com/StartBootstrap/${packageJSON.name}/blob/master/LICENSE)
+import packageJSON from "../package.json" assert { type: "json" };
+const { title, version, homepage, author, license, name } = packageJSON;
+
+const { test, mkdir } = pkg;
+
+// Get the file URL for the current file
+const __filename = fileURLToPath(import.meta.url);
+
+export async function renderScripts() {
+  try {
+    const sourcePath = resolve(dirname(__filename), "../src/js/scripts.js");
+    const destPath = resolve(dirname(__filename), "../dist/js/scripts.js");
+    const destPathDirname = dirname(destPath);
+
+    const copyright = getCopyrightHeader();
+    const scriptsJS = await readSourceFile(sourcePath);
+
+    await ensureDirectoryExists(destPathDirname);
+    await writeToFile(destPath, copyright + scriptsJS);
+
+    console.log(`### INFO: Successfully rendered scripts to ${destPath}`);
+  } catch (error) {
+    console.error("### ERROR: Failed to render scripts:", error);
+  }
+}
+
+function getCopyrightHeader() {
+  return `/*!
+    * Start Bootstrap - ${title} v${version} (${homepage})
+    * Copyright 2013-${new Date().getFullYear()} ${author}
+    * Licensed under ${license} (https://github.com/Pedrojok01/${name}/blob/master/LICENSE)
     */
     `;
-  const scriptsJS = fs.readFileSync(sourcePath);
-  const destPathDirname = path.dirname(destPath);
+}
 
-  if (!sh.test("-e", destPathDirname)) {
-    sh.mkdir("-p", destPathDirname);
+async function readSourceFile(filePath) {
+  return fs.readFile(filePath, "utf8");
+}
+
+async function ensureDirectoryExists(dirPath) {
+  if (!test("-e", dirPath)) {
+    mkdir("-p", dirPath);
   }
+}
 
-  fs.writeFileSync(destPath, copyright + scriptsJS);
-};
+async function writeToFile(filePath, content) {
+  return fs.writeFile(filePath, content, "utf8");
+}

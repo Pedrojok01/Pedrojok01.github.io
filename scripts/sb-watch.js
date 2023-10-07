@@ -1,84 +1,65 @@
-"use strict";
+import { watch } from "chokidar";
+import pkg from "lodash";
 
-const _ = require("lodash");
-const chokidar = require("chokidar");
-const path = require("path");
-const renderAssets = require("./render-assets");
-const renderPug = require("./render-pug");
-const renderScripts = require("./render-scripts");
-const renderSCSS = require("./render-scss");
+import { renderAssets } from "./render-assets.js";
+import { renderPug } from "./render-pug.js";
+import { renderScripts } from "./render-scripts.js";
+import { renderSCSS } from "./render-scss.js";
 
-const watcher = chokidar.watch("src", {
-  persistent: true
+const { each } = pkg;
+
+const PUG_REGEX = /\.pug$/;
+const SCSS_REGEX = /\.scss$/;
+const JS_REGEX = /src\/js\//;
+const ASSETS_REGEX = /src\/assets\//;
+const EXCLUDE_REGEX = /(includes|mixins|\/pug\/layouts\/)/;
+
+const watcher = watch("src", {
+  persistent: true,
 });
 
 let READY = false;
+const allPugFiles = {};
 
 process.title = "pug-watch";
 process.stdout.write("Loading");
-let allPugFiles = {};
 
-watcher.on("add", (filePath) => _processFile(filePath, "add"));
-watcher.on("change", (filePath) => _processFile(filePath, "change"));
-watcher.on("ready", () => {
-  READY = true;
-  console.log(" READY TO ROLL!");
-});
+watcher
+  .on("add", (filePath) => processFile(filePath, "add"))
+  .on("change", (filePath) => processFile(filePath, "change"))
+  .on("ready", () => {
+    READY = true;
+    console.log(" READY TO ROLL!");
+    handleSCSS();
+  });
 
-_handleSCSS();
-
-function _processFile(filePath, watchEvent) {
+function processFile(filePath, watchEvent) {
   if (!READY) {
-    if (filePath.match(/\.pug$/)) {
-      if (!filePath.match(/includes/) && !filePath.match(/mixins/) && !filePath.match(/\/pug\/layouts\//)) {
-        allPugFiles[filePath] = true;
-      }
+    if (PUG_REGEX.test(filePath) && !EXCLUDE_REGEX.test(filePath)) {
+      allPugFiles[filePath] = true;
+      process.stdout.write(".");
     }
-    process.stdout.write(".");
     return;
   }
 
   console.log(`### INFO: File event: ${watchEvent}: ${filePath}`);
 
-  if (filePath.match(/\.pug$/)) {
-    return _handlePug(filePath, watchEvent);
-  }
-
-  if (filePath.match(/\.scss$/)) {
-    if (watchEvent === "change") {
-      return _handleSCSS(filePath, watchEvent);
-    }
-    return;
-  }
-
-  if (filePath.match(/src\/js\//)) {
-    return renderScripts();
-  }
-
-  if (filePath.match(/src\/assets\//)) {
-    return renderAssets();
-  }
+  if (PUG_REGEX.test(filePath)) return handlePug(filePath, watchEvent);
+  if (SCSS_REGEX.test(filePath) && watchEvent === "change") return handleSCSS();
+  if (JS_REGEX.test(filePath)) return renderScripts();
+  if (ASSETS_REGEX.test(filePath)) return renderAssets();
 }
 
-function _handlePug(filePath, watchEvent) {
-  if (watchEvent === "change") {
-    if (filePath.match(/includes/) || filePath.match(/mixins/) || filePath.match(/\/pug\/layouts\//)) {
-      return _renderAllPug();
-    }
-    return renderPug(filePath);
-  }
-  if (!filePath.match(/includes/) && !filePath.match(/mixins/) && !filePath.match(/\/pug\/layouts\//)) {
-    return renderPug(filePath);
-  }
+function handlePug(filePath, watchEvent) {
+  if (watchEvent === "change" && EXCLUDE_REGEX.test(filePath)) return renderAllPug();
+  if (!EXCLUDE_REGEX.test(filePath)) return renderPug(filePath);
 }
 
-function _renderAllPug() {
+function renderAllPug() {
   console.log("### INFO: Rendering All");
-  _.each(allPugFiles, (value, filePath) => {
-    renderPug(filePath);
-  });
+  each(allPugFiles, (value, filePath) => renderPug(filePath));
 }
 
-function _handleSCSS() {
+function handleSCSS() {
   renderSCSS();
 }

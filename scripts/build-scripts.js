@@ -1,5 +1,3 @@
-"use strict";
-
-const renderScripts = require("./render-scripts");
+import { renderScripts } from "./render-scripts.js";
 
 renderScripts();

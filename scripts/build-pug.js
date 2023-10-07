@@ -1,19 +1,28 @@
-"use strict";
-const path = require("path");
-const sh = require("shelljs");
-const renderPug = require("./render-pug");
+import { resolve, dirname, extname } from "path";
+import { fileURLToPath } from "url";
 
-const srcPath = path.resolve(path.dirname(__filename), "../src");
+import pkg from "shelljs";
 
-sh.find(srcPath).forEach(_processFile);
+import { renderPug } from "./render-pug.js";
 
-function _processFile(filePath) {
-  if (
-    filePath.match(/\.pug$/) &&
-    !filePath.match(/include/) &&
-    !filePath.match(/mixin/) &&
-    !filePath.match(/\/pug\/layouts\//)
-  ) {
+const { find } = pkg;
+
+// Get the file URL for the current file
+const __filename = fileURLToPath(import.meta.url);
+const srcPath = resolve(dirname(__filename), "../src");
+
+// Process each file found in the srcPath directory
+find(srcPath).forEach(processFile);
+
+/**
+ * Processes a file if it has a .pug extension and does not match excluded paths.
+ * @param {string} filePath - The path of the file to process.
+ */
+function processFile(filePath) {
+  const isPugFile = extname(filePath) === ".pug";
+  const isExcluded = /include|mixin|\/pug\/layouts\//.test(filePath);
+
+  if (isPugFile && !isExcluded) {
     renderPug(filePath);
   }
 }

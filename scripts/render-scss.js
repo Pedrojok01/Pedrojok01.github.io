@@ -1,40 +1,47 @@
-"use strict";
-const autoprefixer = require("autoprefixer");
-const fs = require("fs");
-const packageJSON = require("../package.json");
-const path = require("path");
-const postcss = require("postcss");
-const sass = require("sass");
-const sh = require("shelljs");
+import { promises as fs } from "fs";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
 
-const stylesPath = "../src/scss/styles.scss";
-const destPath = path.resolve(path.dirname(__filename), "../dist/css/styles.css");
+import autoprefixer from "autoprefixer";
+import postcss from "postcss";
+import { renderSync } from "sass";
 
-module.exports = function renderSCSS() {
-  const results = sass.renderSync({
-    data: entryPoint,
-    includePaths: [path.resolve(path.dirname(__filename), "../node_modules")]
+// Get the file URL for the current file
+const __filename = fileURLToPath(import.meta.url);
+
+export async function renderSCSS() {
+  const destPath = resolve(dirname(__filename), "../dist/css/styles.css");
+  const stylesPath = resolve(dirname(__filename), "../src/scss/styles.scss");
+
+  try {
+    await ensureDirectoryExists(destPath);
+    const results = await renderSass(stylesPath);
+    await processAndWriteCSS(results.css, destPath);
+  } catch (error) {
+    console.error("### ERROR: Failed to render SCSS:", error);
+  }
+}
+
+async function renderSass(stylesPath) {
+  const options = {
+    file: stylesPath,
+    includePaths: [resolve(dirname(__filename), "../node_modules")],
+  };
+
+  return renderSync(options);
+}
+
+async function ensureDirectoryExists(destPath) {
+  const destPathDirname = dirname(destPath);
+  await fs.mkdir(destPathDirname, { recursive: true });
+}
+
+async function processAndWriteCSS(css, destPath) {
+  const result = await postcss([autoprefixer]).process(css, {
+    from: undefined,
+    to: "styles.css",
   });
 
-  const destPathDirname = path.dirname(destPath);
-  if (!sh.test("-e", destPathDirname)) {
-    sh.mkdir("-p", destPathDirname);
-  }
-
-  postcss([autoprefixer])
-    .process(results.css, { from: "styles.css", to: "styles.css" })
-    .then((result) => {
-      result.warnings().forEach((warn) => {
-        console.warn(warn.toString());
-      });
-      fs.writeFileSync(destPath, result.css.toString());
-    });
-};
-
-const entryPoint = `/*!
-* Start Bootstrap - ${packageJSON.title} v${packageJSON.version} (${packageJSON.homepage})
-* Copyright 2013-${new Date().getFullYear()} ${packageJSON.author}
-* Licensed under ${packageJSON.license} (https://github.com/StartBootstrap/${packageJSON.name}/blob/master/LICENSE)
-*/
-@import "${stylesPath}"
-`;
+  result.warnings().forEach((warn) => console.warn(warn.toString()));
+  await fs.writeFile(destPath, result.css);
+}

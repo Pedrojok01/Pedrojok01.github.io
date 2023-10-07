@@ -1,5 +1,3 @@
-"use strict";
-
-const renderSCSS = require("./render-scss");
+import { renderSCSS } from "./render-scss.js";
 
 renderSCSS();
