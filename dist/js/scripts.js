@@ -1,39 +1,59 @@
 /*!
- * Start Bootstrap - Resume v7.0.0 (https://github.com/Pedrojok01/Pedrojok01.github.io)
- * Copyright 2013-2023 Pedrojok01
- * Licensed under MIT (https://github.com/Pedrojok01/startbootstrap-resume/blob/master/LICENSE)
- */
+    * Start Bootstrap - Resume v7.0.0 (https://github.com/Pedrojok01/Pedrojok01.github.io)
+    * Copyright 2013-2023 Pedrojok01
+    * Licensed under MIT (https://github.com/Pedrojok01/startbootstrap-resume/blob/master/LICENSE)
+    */
+    // Wrap the code in an IIFE to avoid polluting the global namespace
 (function ($) {
-  // Start of use strict
+  "use strict";
 
-  // Smooth scrolling using jQuery easing
-  $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function () {
-    if (
-      location.pathname.replace(/^\//, "") === this.pathname.replace(/^\//, "") &&
-      location.hostname === this.hostname
-    ) {
-      let target = $(this.hash);
-      target = target.length ? target : $(`[name=${this.hash.slice(1)}]`);
-      if (target.length) {
-        $("html, body").animate(
-          {
-            scrollTop: target.offset().top,
-          },
-          1000,
-          "easeInOutExpo"
-        );
-        return false;
-      }
-    }
-  });
+  // Constants
+  const ANIMATION_DURATION = 1000; // Adjust this value for the desired animation speed
 
-  // Closes responsive menu when a scroll trigger link is clicked
-  $(".js-scroll-trigger").click(() => {
-    $(".navbar-collapse").collapse("hide");
+  // Cache the frequently used selectors
+  const $scrollTrigger = $('a.js-scroll-trigger[href*="#"]:not([href="#"])');
+  const $navbarCollapse = $(".navbar-collapse");
+
+  // Event handler for smooth scrolling and menu collapsing on click
+  $scrollTrigger.on("click", function (event) {
+    handleSmoothScrolling(event, this);
+    handleMenuCollapse();
   });
 
   // Activate scrollspy to add active class to navbar items on scroll
-  $("body").scrollspy({
+  $(document).scrollspy({
     target: "#sideNav",
   });
-})(jQuery); // End of use strict
+
+  /**
+   * Handles smooth scrolling when a scroll trigger link is clicked.
+   * @param {Event} event - The click event.
+   * @param {HTMLElement} element - The clicked element.
+   */
+  function handleSmoothScrolling(event, element) {
+    if (
+      location.pathname.replace(/^\//, "") === element.pathname.replace(/^\//, "") &&
+      location.hostname === element.hostname
+    ) {
+      const target = $(element.hash);
+      const $target = target.length ? target : $(`[name=${element.hash.slice(1)}]`);
+      if ($target.length) {
+        event.preventDefault();
+        $("html, body").animate(
+          {
+            scrollTop: $target.offset().top,
+          },
+          ANIMATION_DURATION,
+          "easeInOutExpo"
+        );
+      }
+    }
+  }
+
+  /**
+   * Closes the responsive menu.
+   */
+  function handleMenuCollapse() {
+    $navbarCollapse.collapse("hide");
+  }
+})(jQuery);
