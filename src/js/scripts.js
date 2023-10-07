@@ -27,11 +27,14 @@
    */
   function handleSmoothScrolling(event, element) {
     if (
-      location.pathname.replace(/^\//, "") === element.pathname.replace(/^\//, "") &&
+      location.pathname.replace(/^\//, "") ===
+        element.pathname.replace(/^\//, "") &&
       location.hostname === element.hostname
     ) {
       const target = $(element.hash);
-      const $target = target.length ? target : $(`[name=${element.hash.slice(1)}]`);
+      const $target = target.length
+        ? target
+        : $(`[name=${element.hash.slice(1)}]`);
       if ($target.length) {
         event.preventDefault();
         $("html, body").animate(
@@ -39,7 +42,7 @@
             scrollTop: $target.offset().top,
           },
           ANIMATION_DURATION,
-          "easeInOutExpo"
+          "easeInOutExpo",
         );
       }
     }

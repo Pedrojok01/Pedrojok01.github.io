@@ -51,7 +51,8 @@ function processFile(filePath, watchEvent) {
 }
 
 function handlePug(filePath, watchEvent) {
-  if (watchEvent === "change" && EXCLUDE_REGEX.test(filePath)) return renderAllPug();
+  if (watchEvent === "change" && EXCLUDE_REGEX.test(filePath))
+    return renderAllPug();
   if (!EXCLUDE_REGEX.test(filePath)) return renderPug(filePath);
 }
 
