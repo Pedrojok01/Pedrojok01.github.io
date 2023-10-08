@@ -20,7 +20,8 @@ async function updateRootIndex() {
     const updatedContent = content
       .replace(/href="css\//g, 'href="dist/css/')
       .replace(/href="assets\//g, 'href="dist/assets/')
-      .replace(/src="assets\//g, 'src="dist/assets/');
+      .replace(/src="assets\//g, 'src="dist/assets/')
+      .replace(/src="js\//g, 'src="dist/js/');
 
     // Write the updated content to the root index.html
     await writeFile(oldIndexPath, updatedContent);

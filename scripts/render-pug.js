@@ -27,7 +27,7 @@ function prettifyHtml(html) {
   return format(html, {
     semi: true,
     trailingComma: "es5",
-    printWidth: 100,
+    printWidth: 120,
     tabWidth: 2,
     singleQuote: false,
     proseWrap: "preserve",
