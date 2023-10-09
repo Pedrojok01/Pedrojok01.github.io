@@ -1,18 +1,31 @@
-import { resolve, dirname, extname } from "path";
+import { resolve, dirname, extname, join } from "path";
 import { fileURLToPath } from "url";
-
-import pkg from "shelljs";
+import { readdir, stat } from "fs/promises";
 
 import { renderPug } from "./render-pug.js";
 
-const { find } = pkg;
-
 // Get the file URL for the current file
 const __filename = fileURLToPath(import.meta.url);
-const srcPath = resolve(dirname(__filename), "../src");
+const pugPath = resolve(dirname(__filename), "../src/pug");
 
-// Process each file found in the srcPath directory
-find(srcPath).forEach(processFile);
+// Recursive function to process each file and subdirectory
+async function processDirectory(directoryPath) {
+  const files = await readdir(directoryPath);
+  for (const file of files) {
+    const filePath = join(directoryPath, file);
+    const stats = await stat(filePath);
+    if (stats.isDirectory()) {
+      await processDirectory(filePath); // Recurse into subdirectory
+    } else {
+      processFile(filePath); // Process individual file
+    }
+  }
+}
+
+// Kick off the processing with the src/pug directory
+processDirectory(pugPath).catch((error) => {
+  console.error("Error processing directory:", error);
+});
 
 /**
  * Processes a file if it has a .pug extension and does not match excluded paths.

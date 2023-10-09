@@ -1,18 +1,18 @@
-import { writeFileSync } from "fs";
-import { resolve, dirname } from "path";
+import { writeFileSync, promises as fs } from "fs";
+import { resolve, dirname, sep } from "path";
 import { fileURLToPath } from "url";
 
 import { format } from "prettier";
 import { renderFile } from "pug";
-import pkg from "shelljs";
-
-const { test, mkdir } = pkg;
 
 // Get the file URL for the current file
 const __filename = fileURLToPath(import.meta.url);
 
 function getDestPath(filePath) {
-  return filePath.replace(/src\/pug\//, "dist/").replace(/\.pug$/, ".html");
+  // Use sep to ensure the correct path separator for the current platform
+  const srcPugPath = `src${sep}pug${sep}`;
+  const distPath = `dist${sep}`;
+  return filePath.replace(srcPugPath, distPath).replace(/\.pug$/, ".html");
 }
 
 function renderHtml(filePath, srcPath) {
@@ -38,20 +38,18 @@ function prettifyHtml(html) {
 }
 
 function writeToFile(destPath, content) {
-  const destPathDirname = dirname(destPath);
-  if (!test("-e", destPathDirname)) {
-    mkdir("-p", destPathDirname);
-  }
   writeFileSync(destPath, content);
 }
 
 export const renderPug = async (filePath) => {
+  const srcPath = resolve(dirname(filePath));
   const destPath = getDestPath(filePath);
-  const srcPath = resolve(dirname(__filename), "../src");
 
   try {
     const html = renderHtml(filePath, srcPath);
     const prettifiedHtml = await prettifyHtml(html);
+
+    await fs.mkdir(dirname(destPath), { recursive: true });
     writeToFile(destPath, prettifiedHtml);
   } catch (error) {
     console.error(`### ERROR: Failed to render ${filePath}:`, error);

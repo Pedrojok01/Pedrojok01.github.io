@@ -2,12 +2,8 @@ import { promises as fs } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 
-import pkg from "shelljs";
-
 import packageJSON from "../package.json" assert { type: "json" };
 const { title, version, homepage, author, license, name } = packageJSON;
-
-const { test, mkdir } = pkg;
 
 // Get the file URL for the current file
 const __filename = fileURLToPath(import.meta.url);
@@ -42,9 +38,7 @@ async function readSourceFile(filePath) {
 }
 
 async function ensureDirectoryExists(dirPath) {
-  if (!test("-e", dirPath)) {
-    mkdir("-p", dirPath);
-  }
+  await fs.mkdir(dirPath, { recursive: true });
 }
 
 async function writeToFile(filePath, content) {

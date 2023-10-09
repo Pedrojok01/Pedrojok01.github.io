@@ -1,9 +1,6 @@
+import fsExtra from "fs-extra";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
-
-import pkg from "shelljs";
-
-const { cp, test } = pkg;
 
 // Get the file URL for the current file
 const __filename = fileURLToPath(import.meta.url);
@@ -11,22 +8,17 @@ const __filename = fileURLToPath(import.meta.url);
 /**
  * Copies the assets from the source directory to the destination directory.
  */
-export function renderAssets() {
+export async function renderAssets() {
   const sourcePath = resolve(dirname(__filename), "../src/assets");
-  const destPath = resolve(dirname(__filename), "../dist/.");
+  const destPath = resolve(dirname(__filename), "../dist/assets/.");
 
-  // Check if source path exists
-  if (!test("-e", sourcePath)) {
-    console.error(`Source path ${sourcePath} does not exist.`);
+  try {
+    // Check if source path exists
+    await fsExtra.access(sourcePath);
+    // Perform the copy operation
+    await fsExtra.copy(sourcePath, destPath);
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
     process.exit(1);
-  }
-
-  // Perform the copy operation
-  const result = cp("-R", sourcePath, destPath);
-
-  // Check for errors
-  if (result.code !== 0) {
-    console.error(`Error: ${result.stderr}`);
-    process.exit(result.code);
   }
 }

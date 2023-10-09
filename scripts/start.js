@@ -29,9 +29,9 @@ const config = {
   killOthers: ["failure", "success"],
 };
 
-async function runCommands() {
+function runCommands() {
   try {
-    await concurrently(commands, config);
+    concurrently(commands, config);
     console.log("Success");
   } catch (error) {
     console.error("Failure:", error);

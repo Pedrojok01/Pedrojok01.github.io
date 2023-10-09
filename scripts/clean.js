@@ -1,30 +1,28 @@
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
-
-import pkg from "shelljs";
-
-const { test, rm } = pkg;
+import { promises as fs } from "fs";
 
 /**
  * Removes all files within a specified directory.
  * @param {string} dirPath - The path of the directory to clear.
  */
-function clearDirectory(dirPath) {
-  // Ensure the directory exists before attempting to clear it
-  if (!test("-d", dirPath)) {
-    console.error(`Directory ${dirPath} does not exist.`);
+async function clearDirectory(dirPath) {
+  try {
+    const files = await fs.readdir(dirPath, { withFileTypes: true });
+    await Promise.all(
+      files.map((file) => {
+        const filePath = resolve(dirPath, file.name);
+        if (file.isDirectory()) {
+          return fs.rm(filePath, { recursive: true });
+        } else {
+          return fs.unlink(filePath);
+        }
+      }),
+    );
+  } catch (error) {
+    console.error(`Error clearing directory ${dirPath}:`, error.message);
     process.exit(1);
   }
-
-  // Perform the removal operation
-  rm("-rf", `${dirPath}/*`, (code, stdout, stderr) => {
-    if (code !== 0) {
-      console.error(`Error: ${stderr}`);
-      process.exit(code);
-    } else {
-      console.log(`Successfully cleared directory: ${dirPath}`);
-    }
-  });
 }
 
 // Get the file URL for the current file
