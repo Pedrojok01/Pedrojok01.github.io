@@ -29,12 +29,18 @@ const config = {
   killOthers: ["failure", "success"],
 };
 
+/**
+ * Runs the specified commands concurrently.
+ * Logs success if all commands run successfully,
+ * or an error message if any command fails.
+ */
 function runCommands() {
   try {
     concurrently(commands, config);
     console.log("Success");
   } catch (error) {
     console.error("Failure:", error);
+    process.exit(1);
   }
 }
 

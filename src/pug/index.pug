@@ -60,13 +60,15 @@ html(lang="en")
           li.nav-item
             a.nav-link.js-scroll-trigger(href="#experience") Experience
           li.nav-item
-            a.nav-link.js-scroll-trigger(href="#education") Education
-          li.nav-item
             a.nav-link.js-scroll-trigger(href="#skills") Skills
           li.nav-item
-            a.nav-link.js-scroll-trigger(href="#interests") Interests
+            a.nav-link.js-scroll-trigger(href="#portfolio") Portfolio
           li.nav-item
-            a.nav-link.js-scroll-trigger(href="#awards") Certifications
+            a.nav-link.js-scroll-trigger(href="#education") Education
+          li.nav-item
+            a.nav-link.js-scroll-trigger(href="#awards") Awards
+          li.nav-item
+            a.nav-link.js-scroll-trigger(href="#interests") Interests
 
     // Page Content
     .container-fluid.p-0
@@ -201,27 +203,6 @@ html(lang="en")
 
       hr.m-0
 
-      // Education
-      section#education.resume-section
-        .resume-section-content
-          h2.mb-5 Education
-
-          .d-flex.flex-column.flex-md-row.justify-content-between.mb-5
-            .flex-grow-1
-              h3.mb-0 Moralis Academy
-              .subheading.mb-3 Blockchain, DeFi and Smart-Contract Programming
-            .flex-shrink-0
-              span.text-primary September 2020 - October 2021
-
-          .d-flex.flex-column.flex-md-row.justify-content-between
-            .flex-grow-1
-              h3.mb-0 Paul Valery University
-              .subheading.mb-3 Bachelor of Art in Economics
-            .flex-shrink-0
-              span.text-primary September 2004 - June 2007
-
-      hr.m-0
-
       // Skills
       section#skills.resume-section
         .resume-section-content
@@ -289,21 +270,65 @@ html(lang="en")
 
       hr.m-0
 
-      // Interests
-      section#interests.resume-section
+      // Portfolio
+      section#portfolio.resume-section
         .resume-section-content
-          h2.mb-5 Interests
-          p
-            | Apart from blockchain development and crypto, I have been traveling a lot around the world, from
-            | playing poker in Vegas, to diving in Thailand, to skydiving in New Zealand, to climbing over
-            | 6,000 m in Ladakh in Northern India, to going over the polar circle in Norway. I eventually
-            | settled in Thailand countryside, where I enjoy a quiet life with my wife and kids.
-          p
-            | Here is my personal website relating most of my adventures (built using Next.js/TypeScript/Antd):
-            | <a href="https://www.voyageboost.com">https://www.voyageboost.com</a>
-          p.mb-0
-            | Nowadays, most of my time is spent following and contributing to the crypto-world as I truly believe that it will be
-            | a game changer in many areas in the coming years.
+          h2.mb-5 Portfolio
+
+          .row.mb-4
+            .col-md-6
+              h3.mb-0 Web3 Boilerplate
+              p Next.js, TypeScript, @web3-react^8, Antd
+              a(href='https://web3-boilerplate.netlify.app' target='_blank')
+                img.mb-2(src='assets/img/web3_boilerplate.webp' alt='Web3Boilerplate website Thumbnail' class='img-thumbnail')
+              p GitHub: <a href="https://github.com/Pedrojok01/Web3-Boilerplate">https://github.com/Pedrojok01/Web3-Boilerplate</a>
+
+            .col-md-6
+              h3.mb-0 MoveMyNFT
+              p Hardhat, Next.js, TypeScript, Wagmi, Viem, Antd
+              a(href='https://movemynft.com/' target='_blank')
+                img.mb-2(src='assets/img/movemynft.webp' alt='MoveMyNFT website Thumbnail' class='img-thumbnail')
+              p GitHub: <a href="https://github.com/Pedrojok01/MoveMyNFT">https://github.com/Pedrojok01/MoveMyNFT</a>
+          .row.mb-4
+            .col-md-6
+              h3.mb-0 Personal Travel Blog
+              p Next.js, TypeScript, Antd
+              a(href='https://www.voyageboost.com/' target='_blank')
+                img.mb-2(src='assets/img/voyageboost.webp' alt='Voyageboost.com website Thumbnail' class='img-thumbnail')
+            .col-md-6
+              h3.mb-0 CoinFlip
+              p Truffle, Chainlink VRF, React.js, @web3-react^6, @emotion
+              a(href='https://coinflip-double-up-your-eth.netlify.app/' target='_blank')
+                img.mb-2(src='assets/img/coinflip.webp' alt='Coinflip website Thumbnail' class='img-thumbnail')
+              p GitHub: <a href="https://github.com/Pedrojok01/CoinFlip_2.0">https://github.com/Pedrojok01/CoinFlip_2.0</a>
+          .row
+            .col-md-6
+              h3.mb-0 CryptoCats
+              p Hardhat, Next.js, TypeScript, Wagmin, @chakra-ui
+              a(href='https://crypto-cats.netlify.app/' target='_blank')
+                img.mb-2(src='assets/img/cryptocats.webp' alt='CryptoCats website Thumbnail' class='img-thumbnail')
+              p GitHub: <a href="https://github.com/Pedrojok01/CryptoCats">https://github.com/Pedrojok01/CryptoCats</a>
+
+      hr.m-0
+
+      // Education
+      section#education.resume-section
+        .resume-section-content
+          h2.mb-5 Education
+
+          .d-flex.flex-column.flex-md-row.justify-content-between.mb-5
+            .flex-grow-1
+              h3.mb-0 Moralis Academy
+              .subheading.mb-3 Blockchain, DeFi and Smart-Contract Programming
+            .flex-shrink-0
+              span.text-primary September 2020 - October 2021
+
+          .d-flex.flex-column.flex-md-row.justify-content-between
+            .flex-grow-1
+              h3.mb-0 Paul Valery University
+              .subheading.mb-3 Bachelor of Art in Economics
+            .flex-shrink-0
+              span.text-primary September 2004 - June 2007
 
       hr.m-0
 
@@ -354,6 +379,24 @@ html(lang="en")
               span.fa-li
                 i.fas.fa-trophy.text-warning
               | Bitcoin Attacks - Ivan on Tech Blockchain Academy 2020
+
+      hr.m-0
+
+      // Interests
+      section#interests.resume-section
+        .resume-section-content
+          h2.mb-5 Interests
+          p
+            | Apart from blockchain development and crypto, I have been traveling a lot around the world, from
+            | playing poker in Vegas, to diving in Thailand, to skydiving in New Zealand, to climbing over
+            | 6,000 m in Ladakh in Northern India, to going over the polar circle in Norway. I eventually
+            | settled in Thailand countryside, where I enjoy a quiet life with my wife and kids.
+          p
+            | Here is my personal website relating most of my adventures (built using Next.js/TypeScript/Antd):
+            | <a href="https://www.voyageboost.com">https://www.voyageboost.com</a>
+          p.mb-0
+            | Nowadays, most of my time is spent following and contributing to the crypto-world as I truly believe that it will be
+            | a game changer in many areas in the coming years.
 
     // Bootstrap core JS
     script(
