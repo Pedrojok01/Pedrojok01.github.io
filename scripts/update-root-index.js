@@ -25,9 +25,6 @@ async function updateRootIndex() {
 
     // Write the updated content to the root index.html
     await writeFile(oldIndexPath, updatedContent);
-    console.log(
-      `Updated ${oldIndexPath} with new content from ${newIndexPath}`,
-    );
   } catch (error) {
     console.error("Error updating root index.html:", error.message);
   }

@@ -35,6 +35,7 @@
       const $target = target.length
         ? target
         : $(`[name=${element.hash.slice(1)}]`);
+
       if ($target.length) {
         event.preventDefault();
         $("html, body").animate(
@@ -43,6 +44,10 @@
           },
           ANIMATION_DURATION,
           "easeInOutExpo",
+          function () {
+            // Animation complete, update the URL with the anchor
+            history.pushState(null, null, element.hash);
+          },
         );
       }
     }

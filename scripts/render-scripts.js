@@ -23,8 +23,6 @@ export async function renderScripts() {
 
     await ensureDirectoryExists(destPathDirname);
     await writeToFile(destPath, copyright + scriptsJS);
-
-    console.log(`### INFO: Successfully rendered scripts to ${destPath}`);
   } catch (error) {
     console.error("### ERROR: Failed to render scripts:", error);
   }

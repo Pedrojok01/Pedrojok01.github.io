@@ -28,7 +28,5 @@ export function renderAssets() {
   if (result.code !== 0) {
     console.error(`Error: ${result.stderr}`);
     process.exit(result.code);
-  } else {
-    console.log(`Assets have been successfully copied to ${destPath}`);
   }
 }
