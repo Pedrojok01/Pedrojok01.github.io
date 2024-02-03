@@ -44,7 +44,7 @@
           },
           ANIMATION_DURATION,
           "easeInOutExpo",
-          function () {
+          () => {
             // Animation complete, update the URL with the anchor
             history.pushState(null, null, element.hash);
           },
