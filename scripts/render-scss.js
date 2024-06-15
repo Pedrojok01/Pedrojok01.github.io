@@ -15,14 +15,14 @@ export async function renderSCSS() {
 
   try {
     await ensureDirectoryExists(destPath);
-    const results = await renderSass(stylesPath);
+    const results = renderSass(stylesPath);
     await processAndWriteCSS(results.css, destPath);
   } catch (error) {
     console.error("### ERROR: Failed to render SCSS:", error);
   }
 }
 
-async function renderSass(stylesPath) {
+function renderSass(stylesPath) {
   const options = {
     file: stylesPath,
     includePaths: [resolve(dirname(__filename), "../node_modules")],

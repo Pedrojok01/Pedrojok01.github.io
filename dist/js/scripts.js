@@ -1,5 +1,5 @@
 /*!
-    * Start Bootstrap - Resume v7.0.2 (https://github.com/Pedrojok01/Pedrojok01.github.io)
+    * Start Bootstrap - Resume v7.0.21 (https://github.com/Pedrojok01/Pedrojok01.github.io)
     * Copyright 2013-2024 Pedrojok01
     * Licensed under MIT (https://github.com/Pedrojok01/startbootstrap-resume/blob/master/LICENSE)
     */
