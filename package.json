@@ -1,7 +1,7 @@
 {
   "title": "Resume",
-  "name": "startbootstrap-resume",
-  "version": "7.0.21",
+  "name": "pedrojok-resume",
+  "version": "7.0.22",
   "scripts": {
     "build": "npm run clean && npm run build:pug && npm run build:scss && npm run build:scripts && npm run build:assets && npm run update-root",
     "build:assets": "node scripts/build-assets.js",
@@ -23,7 +23,7 @@
     "theme",
     "template"
   ],
-  "homepage": "https://github.com/Pedrojok01/Pedrojok01.github.io",
+  "homepage": "https://pedrojok.com",
   "author": "Pedrojok01",
   "contributors": [
     "David Miller (https://davidmiller.io/)"
