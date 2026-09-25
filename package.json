@@ -2,7 +2,7 @@
   "name": "pedrojok-resume",
   "version": "7.0.22",
   "scripts": {
-    "build": "node --run clean && node --run build:pug && node --run build:scss && node --run build:scripts && node --run build:assets && node --run update-root",
+    "build": "node --run clean && node --run build:scss && node --run build:scripts && node --run build:assets && node --run build:pug && node --run update-root",
     "build:assets": "node scripts/build-assets.js",
     "build:pug": "node scripts/build-pug.js",
     "build:scripts": "node scripts/build-scripts.js",
