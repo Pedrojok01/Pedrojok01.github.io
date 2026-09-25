@@ -23,6 +23,7 @@ export async function renderScripts() {
       target: "es2022",
       minify: true,
       legalComments: "none",
+      sourcemap: "linked",
       chunkNames: "chunks/[name]-[hash]",
       logLevel: "warning",
     });

@@ -15,11 +15,15 @@ const fonts = [
 ];
 
 /**
- * Copies src/assets into dist/assets, plus the fonts from node_modules.
+ * Copies src/assets into dist/assets, src/public (robots.txt, sitemap.xml) into
+ * the dist root, plus the fonts from node_modules.
  */
 export async function renderAssets() {
   try {
     await cp(resolve(rootDir, "src/assets"), resolve(rootDir, "dist/assets"), {
+      recursive: true,
+    });
+    await cp(resolve(rootDir, "src/public"), resolve(rootDir, "dist"), {
       recursive: true,
     });
     await mkdir(fontsDir, { recursive: true });

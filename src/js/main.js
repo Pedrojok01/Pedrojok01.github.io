@@ -2,11 +2,16 @@ const nav = document.getElementById("nav");
 const hero = document.getElementById("top");
 const menuButton = document.getElementById("menu-button");
 
-// Nav turns solid once the hero is scrolled past.
+// Nav turns solid once the hero is scrolled past. The hero height comes from a
+// ResizeObserver, so neither page load nor scrolling forces a layout.
+let heroHeight = Infinity;
 const updateNav = () =>
-  nav.classList.toggle("is-solid", window.scrollY > hero.offsetHeight - 80);
+  nav.classList.toggle("is-solid", window.scrollY > heroHeight - 80);
+new ResizeObserver(([entry]) => {
+  heroHeight = entry.borderBoxSize[0].blockSize;
+  updateNav();
+}).observe(hero);
 window.addEventListener("scroll", updateNav, { passive: true });
-updateNav();
 
 // Theme toggle: follows the system until the visitor picks one, then remembers it.
 const themeButton = document.getElementById("theme-button");

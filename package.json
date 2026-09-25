@@ -2,12 +2,11 @@
   "name": "pedrojok-resume",
   "version": "7.0.22",
   "scripts": {
-    "build": "node --run clean && node --run build:scss && node --run build:scripts && node --run build:assets && node --run build:pug && node --run update-root",
+    "build": "node --run clean && node --run build:scss && node --run build:scripts && node --run build:assets && node --run build:pug",
     "build:assets": "node scripts/build-assets.js",
     "build:pug": "node scripts/build-pug.js",
     "build:scripts": "node scripts/build-scripts.js",
     "build:scss": "node scripts/build-scss.js",
-    "update-root": "node scripts/update-root-index.js",
     "clean": "node scripts/clean.js",
     "start": "node --run build && node scripts/start.js",
     "start:debug": "node --run build && node scripts/start.js --debug",
@@ -52,5 +51,7 @@
   "engines": {
     "node": ">=24"
   },
-  "packageManager": "yarn@1.22.22"
+  "overrides": {
+    "socket.io-client": "^4.8.1"
+  }
 }

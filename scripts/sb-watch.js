@@ -8,7 +8,7 @@ import { renderSCSS } from "./render-scss.js";
 const PUG_REGEX = /\.pug$/;
 const SCSS_REGEX = /\.scss$/;
 const JS_REGEX = /src\/js\//;
-const ASSETS_REGEX = /src\/assets\//;
+const ASSETS_REGEX = /src\/(assets|public)\//;
 const EXCLUDE_REGEX = /(includes|mixins|\/pug\/layouts\/)/;
 
 const watcher = watch("src", {
