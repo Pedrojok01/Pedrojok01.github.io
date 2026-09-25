@@ -1,0 +1,72 @@
+// Design tokens. Colors are CSS custom properties so dark mode only swaps values.
+// The hero and footer are always dark, in both themes.
+
+$bp-md: 760px;
+$bp-sm: 560px;
+$nav-height: 60px;
+
+@mixin below($width) {
+  @media (max-width: $width) {
+    @content;
+  }
+}
+
+@mixin light {
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --ink: #0f1624;
+  --text: #3b4458;
+  --muted: #677086;
+  --line: #e3e7ee;
+  --link: #374c85;
+  --blue: #5b74b8;
+  --blue-soft: #e9edf6;
+  --amber-text: #9a5a08;
+  --amber-soft: #fdf1e0;
+  --chip: #eef1f6;
+  --nav-bg: rgba(247, 248, 250, 0.86);
+  --shadow:
+    0 1px 2px rgba(15, 22, 36, 0.05), 0 8px 24px -12px rgba(15, 22, 36, 0.18);
+}
+
+@mixin dark {
+  --bg: #0b111c;
+  --surface: #121a28;
+  --ink: #e8ecf2;
+  --text: #b3bdd0;
+  --muted: #8490a8;
+  --line: #222c3d;
+  --link: #9db1e8;
+  --blue: #6f87c9;
+  --blue-soft: #18223a;
+  --amber-text: #f0a43a;
+  --amber-soft: #2a2114;
+  --chip: #1a2334;
+  --nav-bg: rgba(11, 17, 28, 0.82);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px -14px rgba(0, 0, 0, 0.6);
+}
+
+:root {
+  @include light;
+  --amber: #f0a43a;
+  --night: #0f1624;
+  --night-text: #e8ecf2;
+  --night-muted: #aab5c9;
+  --night-faint: #8490a8;
+  --font: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+}
+
+// System preference, unless the visitor picked a theme with the nav toggle (data-theme on <html>).
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    @include dark;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  @include dark;
+  color-scheme: dark;
+}

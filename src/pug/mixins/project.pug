@@ -1,22 +1,33 @@
-//- Portfolio card: +project({ title, desc?, stack, url, img, repo? })
-//- Thumbnails are 500x300; width/height include the .img-thumbnail padding and border (2 x 5px)
-//- so the reserved space matches the rendered size.
+//- Project card: +project({ title, desc?, stack, url, img, repo?, featured? })
+//- The thumbnail repeats the "Visit" link, so it is hidden from keyboard and screen readers.
 mixin project(p)
-  .col-md-6.mb-4
-    h3.mb-0= p.title
-    if p.desc
-      p.mb-1= p.desc
-    p= p.stack
-    a(href=p.url, target="_blank", rel="noopener noreferrer")
-      img.mb-2.img-thumbnail(
+  article.card(class=p.featured ? "is-featured" : null)
+    a.thumb(
+      href=p.url,
+      target="_blank",
+      rel="noopener noreferrer",
+      tabindex="-1",
+      aria-hidden="true"
+    )
+      img(
         src=`assets/img/${p.img}`,
-        alt=`${p.title} website thumbnail`,
-        width="510",
-        height="306",
+        alt="",
+        width="500",
+        height="300",
         loading="lazy"
       )
-    if p.repo
-      p
-        | GitHub:
-        |
-        a(href=p.repo)= p.repo
+    .card-body
+      h3= p.title
+      if p.desc
+        p.desc= p.desc
+      ul.stack
+        each item in p.stack
+          li= item
+      .card-links
+        a(href=p.url, target="_blank", rel="noopener noreferrer")
+          | Visit #[span.visually-hidden #{ p.title }]
+          +icon("solid/arrow-up-right-from-square")
+        if p.repo
+          a(href=p.repo, target="_blank", rel="noopener noreferrer")
+            | GitHub #[span.visually-hidden repository for #{ p.title }]
+            +icon("solid/arrow-up-right-from-square")

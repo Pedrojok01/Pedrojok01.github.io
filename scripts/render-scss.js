@@ -12,10 +12,7 @@ const destPath = resolve(rootDir, "dist/css/styles.css");
 export async function renderSCSS() {
   try {
     const { css } = compile(stylesPath, {
-      loadPaths: [resolve(rootDir, "node_modules")],
       style: "compressed",
-      // Bootstrap 5.3 still uses @import and legacy color functions.
-      quietDeps: true,
     });
 
     const result = await postcss([autoprefixer]).process(css, {

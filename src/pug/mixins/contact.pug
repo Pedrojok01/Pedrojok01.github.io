@@ -1,0 +1,21 @@
+//- Social links and the copy-email button, shown in the hero and the footer.
+mixin contact
+  a.icon-button(
+    href="https://www.linkedin.com/in/pierre-e/",
+    aria-label="LinkedIn"
+  )
+    +icon("brands/linkedin-in")
+  a.icon-button(href="https://github.com/Pedrojok01", aria-label="GitHub")
+    +icon("brands/github")
+  a.icon-button(href="https://t.me/Pedrojok", aria-label="Telegram")
+    +icon("brands/telegram")
+  a.icon-button(href="https://blog.pedrojok.com", aria-label="Blog")
+    +icon("solid/globe")
+  button.email-button(
+    type="button",
+    data-copy="pierre.estrabaud@protonmail.com",
+    aria-label="Copy email address pierre.estrabaud@protonmail.com"
+  )
+    span.email-text pierre.estrabaud@protonmail.com
+    +icon("solid/copy")
+  span.copy-status(role="status")

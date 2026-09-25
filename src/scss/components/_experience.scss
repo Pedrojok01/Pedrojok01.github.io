@@ -1,0 +1,108 @@
+@use "../tokens" as *;
+
+.timeline {
+  display: grid;
+  gap: 44px;
+}
+
+.job {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 8px 32px;
+  h3 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  ul {
+    display: grid;
+    gap: 6px;
+    max-width: 70ch;
+    margin-top: 12px;
+    padding-left: 1.1em;
+    li::marker {
+      color: var(--blue);
+    }
+  }
+  .desc {
+    max-width: 70ch;
+    margin-top: 10px;
+  }
+  @include below($bp-md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.when {
+  padding-top: 6px;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  @include below($bp-md) {
+    padding-top: 0;
+  }
+}
+
+.org {
+  margin-top: 2px;
+  font-weight: 500;
+  color: var(--muted);
+  a {
+    color: inherit;
+  }
+}
+
+// Several roles at the same company
+.roles {
+  display: grid;
+  gap: 26px;
+  margin: 20px 0 0 5px;
+  padding-left: 24px;
+  border-left: 2px solid var(--line);
+}
+
+.role {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: -31px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--blue);
+    background: var(--surface);
+  }
+  &.is-current::before {
+    background: var(--blue);
+    box-shadow: 0 0 0 4px var(--blue-soft);
+  }
+  h4 {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .when {
+    padding-top: 0;
+    font-size: 12.5px;
+  }
+  ul {
+    margin-top: 8px;
+  }
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stat {
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--amber-soft);
+  color: var(--amber-text);
+  font-family: var(--mono);
+  font-size: 12.5px;
+}

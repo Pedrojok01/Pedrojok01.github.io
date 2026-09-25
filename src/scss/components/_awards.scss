@@ -1,0 +1,88 @@
+// Hackathon results, styled like the scanner's amber findings
+
+.findings {
+  display: grid;
+  gap: 14px;
+  padding: 0;
+  list-style: none;
+}
+
+.finding {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 4px 16px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  strong {
+    color: var(--ink);
+    font-size: 17px;
+  }
+}
+
+.place {
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: var(--amber-soft);
+  color: var(--amber-text);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  sup {
+    margin-left: 1px;
+    font-size: 0.55em;
+  }
+}
+
+.meta {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.sub-head {
+  margin: 28px 0 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.plain-list {
+  display: grid;
+  gap: 8px;
+  padding: 0;
+  list-style: none;
+  li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .year {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+  }
+}
+
+.education {
+  display: grid;
+  gap: 22px;
+  h3 {
+    font-size: 19px;
+    font-weight: 700;
+  }
+  p {
+    color: var(--muted);
+  }
+}

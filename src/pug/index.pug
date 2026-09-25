@@ -1,5 +1,6 @@
 include mixins/icon
 include mixins/project
+include mixins/contact
 
 -
   const site = {
@@ -7,17 +8,106 @@ include mixins/project
     title: "Pierre Estrabaud · Tech Lead, AI Security Tooling",
     description:
       "Pierre Estrabaud - software engineer and Tech Lead on AuditAgent at Nethermind, working on AI, security and blockchain.",
-    image: "https://pedrojok.com/dist/assets/img/profile.jpg",
+    image: "https://pedrojok.com/dist/assets/img/og.jpg",
   };
+
+  const fonts = [
+    "schibsted-grotesk-latin-400-normal",
+    "schibsted-grotesk-latin-500-normal",
+    "schibsted-grotesk-latin-800-normal",
+    "ibm-plex-mono-latin-400-normal",
+  ];
+
+  const nav = [
+    { id: "experience", label: "Experience" },
+    { id: "skills", label: "Skills" },
+    { id: "projects", label: "Projects" },
+    { id: "awards", label: "Awards" },
+    { id: "contact", label: "Contact" },
+  ];
+
+  const skills = [
+    { title: "Languages", items: ["Python", "TypeScript", "JavaScript", "Solidity", "Node.js", "HTML", "CSS"] },
+    { title: "AI engineering", items: ["LLM APIs", "Agent frameworks", "MCP"] },
+    { title: "Back-end", items: ["REST APIs", "Express.js", "NestJS", "MongoDB"] },
+    { title: "Front-end", items: ["React.js", "Next.js", "React Native"] },
+    { title: "DevOps and CI/CD", items: ["Git", "GitHub", "AWS", "Vercel", "Netlify"] },
+    { title: "Blockchain", items: ["Foundry", "Hardhat", "Slither", "Aderyn", "OpenZeppelin", "Chainlink"] },
+    { title: "Web3", items: ["Ethers.js", "Viem", "Wagmi", "Web3.js", "IPFS"] },
+    { title: "Spoken languages", items: ["French · native", "English · very fluent", "Thai · intermediate"] },
+  ];
+
+  const projects = [
+    {
+      title: "AuditAgent",
+      desc: "AI pre-audit security scanner for smart contracts, at Nethermind.",
+      stack: ["Python", "TypeScript", "LLM APIs", "MCP", "Kubernetes", "KEDA"],
+      url: "https://auditagent.nethermind.io/",
+      img: "auditagent.webp",
+      featured: true,
+    },
+    {
+      title: "AI Playbook",
+      desc: "A practical guide to using AI well, in products and as a coding tool.",
+      stack: ["MkDocs Material", "Vercel"],
+      url: "https://ai-playbook.pedrojok.com/",
+      img: "ai-playbook.webp",
+      featured: true,
+    },
+    {
+      title: "Fury Racing",
+      stack: ["Foundry", "Solidity", "Chainlink", "Next.js", "TypeScript", "Node.js", "Lambda"],
+      url: "https://fury-racing.vercel.app/",
+      img: "fury.webp",
+      repo: "https://github.com/Pedrojok01/fury-racing",
+    },
+    {
+      title: "Web3 Boilerplate",
+      stack: ["Next.js", "TypeScript", "@web3-react^8", "Antd"],
+      url: "https://web3-boilerplate.netlify.app",
+      img: "web3_boilerplate.webp",
+      repo: "https://github.com/Pedrojok01/Web3-Boilerplate",
+    },
+    {
+      title: "Personal Travel Blog",
+      stack: ["Next.js", "TypeScript", "Antd", "AWS S3"],
+      url: "https://www.voyageboost.com/",
+      img: "voyageboost.webp",
+    },
+    {
+      title: "PackMyNFT",
+      stack: ["Foundry", "Next.js", "TypeScript", "Wagmi", "Viem", "@chakra-ui"],
+      url: "https://packmynft.com/",
+      img: "packmynft.webp",
+      repo: "https://github.com/Pedrojok01/PackMyNFT",
+    },
+    {
+      title: "MoveMyNFT",
+      stack: ["Hardhat", "Next.js", "TypeScript", "Wagmi", "Viem", "Antd"],
+      url: "https://movemynft.com/",
+      img: "movemynft.webp",
+      repo: "https://github.com/Pedrojok01/MoveMyNFT",
+    },
+    {
+      title: "CryptoCats",
+      stack: ["Hardhat", "Next.js", "TypeScript", "Wagmi", "@chakra-ui"],
+      url: "https://crypto-cats.netlify.app/",
+      img: "cryptocats.webp",
+      repo: "https://github.com/Pedrojok01/CryptoCats",
+    },
+  ];
 
 doctype html
 html(lang="en")
   head
     meta(charset="utf-8")
-    meta(name="viewport", content="width=device-width, initial-scale=1")
+    meta(
+      name="viewport",
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    )
     meta(name="description", content=site.description)
     meta(name="author", content="Pierre Estrabaud")
-    meta(name="theme-color", content="#374c85")
+    meta(name="theme-color", content="#0f1624")
 
     title= site.title
 
@@ -30,10 +120,12 @@ html(lang="en")
     meta(property="og:title", content=site.title)
     meta(property="og:description", content=site.description)
     meta(property="og:image", content=site.image)
-    meta(name="twitter:card", content="summary")
+    meta(property="og:image:width", content="1200")
+    meta(property="og:image:height", content="630")
+    meta(name="twitter:card", content="summary_large_image")
 
-    // Fonts (self-hosted, see src/scss/_fonts.scss)
-    each font in ["mulish-latin-400-normal", "mulish-latin-800-normal", "saira-extra-condensed-latin-500-normal", "saira-extra-condensed-latin-700-normal"]
+    // Fonts (self-hosted, see src/scss/_fonts.scss): preload the ones used above the fold
+    each font in fonts
       link(
         rel="preload",
         href=`assets/fonts/${font}.woff2`,
@@ -42,413 +134,254 @@ html(lang="en")
         crossorigin
       )
 
-    // Core theme CSS (includes Bootstrap)
+    // Apply the saved theme before the first paint (see the theme toggle in main.js)
+    script.
+      try {
+        var t = localStorage.getItem("theme");
+        if (t) document.documentElement.dataset.theme = t;
+      } catch (e) {}
     link(href=asset("css/styles.css"), rel="stylesheet")
+    script(type="module", src=asset("js/main.js"))
 
     // Icons: Font Awesome Free (https://fontawesome.com/license/free), inlined as SVG at build time
 
-  body#page-top(data-bs-spy="scroll", data-bs-target="#sideNav")
-    // Navigation
-    nav#sideNav.navbar.navbar-expand-lg.navbar-dark.bg-primary.fixed-top
-      a.navbar-brand(href="#page-top")
-        span.d-block.d-lg-none Pierre Estrabaud
-        span.d-none.d-lg-block
-          img.img-fluid.img-profile.rounded-circle.mx-auto.mb-2(
-            src="assets/img/profile.jpg",
-            alt="Pierre Estrabaud",
-            width="160",
-            height="160"
+  body
+    nav#nav.nav(aria-label="Main")
+      .container.nav-inner
+        a.brand(href="#top")
+          img(src="assets/img/avatar.webp", alt="", width="30", height="30")
+          | Pierre Estrabaud
+        .nav-right
+          ul#nav-links.nav-links
+            each item in nav
+              li
+                a(href=`#${item.id}`)= item.label
+          button#theme-button.nav-button(
+            type="button",
+            aria-label="Switch to dark theme"
           )
-      button.navbar-toggler(
-        type="button",
-        data-bs-toggle="collapse",
-        data-bs-target="#navbarSupportedContent",
-        aria-controls="navbarSupportedContent",
-        aria-expanded="false",
-        aria-label="Toggle navigation"
-      )
-        span.navbar-toggler-icon
-      #navbarSupportedContent.collapse.navbar-collapse
-        ul.navbar-nav
-          li.nav-item
-            a.nav-link(href="#about") About
-          li.nav-item
-            a.nav-link(href="#experience") Experience
-          li.nav-item
-            a.nav-link(href="#skills") Skills
-          li.nav-item
-            a.nav-link(href="#portfolio") Portfolio
-          li.nav-item
-            a.nav-link(href="#education") Education
-          li.nav-item
-            a.nav-link(href="#awards") Awards
-          li.nav-item
-            a.nav-link(href="#interests") Interests
+            span.theme-icon-dark
+              +icon("solid/moon")
+            span.theme-icon-light
+              +icon("solid/sun")
+          button#menu-button.nav-button.menu-button(
+            type="button",
+            aria-expanded="false",
+            aria-controls="nav-links",
+            aria-label="Menu"
+          )
+            +icon("solid/bars")
 
-    // Page Content
-    main.container-fluid.p-0
-      // About
-      section#about.resume-section
-        .resume-section-content
-          h1.mb-0
-            | Pierre #[span.text-primary Estrabaud]
-          .subheading.mb-5
-            | Tech Lead · Software Engineer · AI Security Tooling ·
-            | #[a(href="mailto:pierre.estrabaud@protonmail.com") pierre.estrabaud@protonmail.com]
+    header#top.hero
+      canvas(aria-hidden="true")
+      .container
+        .hero-content
+          span.eyebrow TECH LEAD · AUDITAGENT
+          h1
+            | Pierre
+            br
+            | Estrabaud
+          p.tagline Software engineer. AI, security and blockchain.
+          p.intro
+            | I lead engineering on #[a(href="https://auditagent.nethermind.io/") AuditAgent], Nethermind's AI
+            | security scanner for smart contracts, after several years building dApps and writing Solidity smart
+            | contracts. I also write about web3 security and CTF challenges on my
+            | #[a(href="https://blog.pedrojok.com") blog].
+          .hero-actions
+            +contact
+        .hero-art
+          .hud(aria-hidden="true")
+            span
+              span.hud-dot
+              | SCANNING
+            span 180 NODES
+            span
+              | FINDINGS #[b(data-hud="found") 0]
+      a.scroll-cue(href="#experience") SCROLL ↓
 
-          p.lead.mb-5
-            | I'm a software engineer working at the intersection of AI, security and blockchain. I lead
-            | engineering on #[a(href="https://auditagent.nethermind.io/") AuditAgent], Nethermind's AI security
-            | scanner for smart contracts, after several years building dApps and writing Solidity smart contracts.
+    main
+      section#experience.section(aria-labelledby="experience-title")
+        .container
+          .section-head
+            span.kicker Experience · 2007 → now
+            h2#experience-title Experience
+          .timeline
+            article.job
+              .when Apr 2024 → now
+              div
+                h3 Nethermind
+                p.org
+                  | Remote · #[a(href="https://www.nethermind.io/") nethermind.io]
+                .roles
+                  .role.is-current
+                    h4 Tech Lead, AuditAgent
+                    .when Nov 2024 → now
+                    ul
+                      li
+                        | Lead a team of 4 engineers building
+                        | #[a(href="https://auditagent.nethermind.io/") AuditAgent], an AI security scanner for
+                        | Solidity, Cairo and Rust smart contracts.
+                      li Run the AI security scanner on Kubernetes, with KEDA autoscaling.
+                      li.stats
+                        span.stat 6M+ lines of code scanned
+                        span.stat 44K+ vulnerabilities found
+                  .role
+                    h4 AI Security Engineer, AuditAgent
+                    .when Aug 2024 → Nov 2024
+                    ul
+                      li
+                        | Joined the AuditAgent team after my internship to build an AI-powered security solution
+                        | that identifies vulnerabilities in smart contracts.
+                  .role
+                    h4 Smart Contracts Auditor (Intern), Audit Team
+                    .when Apr 2024 → Jul 2024
+                    ul
+                      li Audited Solidity (EVM) and Cairo codebases to identify and mitigate security vulnerabilities.
+                      li
+                        | Reviewed and analyzed audit findings to ensure the reliability and safety of blockchain
+                        | applications.
 
-          .social-icons.lead.mb-5
-            a.social-icon(
-              href="https://www.linkedin.com/in/pierre-e/",
-              aria-label="LinkedIn"
-            )
-              +icon("brands/linkedin-in")
-            a.social-icon(
-              href="https://github.com/Pedrojok01",
-              aria-label="GitHub"
-            )
-              +icon("brands/github")
-            a.social-icon(href="https://t.me/Pedrojok", aria-label="Telegram")
-              +icon("brands/telegram")
-            a.social-icon(href="https://blog.pedrojok.com", aria-label="Blog")
-              +icon("solid/globe")
+            article.job
+              .when Jan 2022 → Nov 2023
+              div
+                h3 Lead Blockchain Developer
+                p.org
+                  | Meed (formerly SuperUltra) · Remote ·
+                  | #[a(href="https://www.meedloyalty.com/") meedloyalty.com]
+                ul
+                  li
+                    | Engineered and developed 5 blockchain-based solutions (DApps), from smart contracts to
+                    | back-end and front-end integration across 4 EVM networks, including Ethereum, Polygon, BSC,
+                    | and Cronos.
+                  li
+                    | Collaborated remotely with a team of 5-10 people in a dynamic startup environment, leveraging
+                    | agile methodologies.
+                  li
+                    | Provided strategic guidance to clients on the development of Web3 products and games,
+                    | ensuring solid blockchain integration for improved functionality and user engagement.
 
-          p.mb-3
-            | I also write about web3 security and CTF challenges on my blog:
-            | #[a(href="https://blog.pedrojok.com") Web3 Security].
+            article.job
+              .when Oct 2017 → Jul 2022
+              div
+                h3 Cryptocurrency Miner
+                p.org Self-employed · Thailand
+                p.desc
+                  | Ran a mining farm of ASIC miners (3 algorithms) and a self-built 6-GPU rig, tuned for efficiency
+                  | through BIOS flashing, overclocking and undervolting.
 
-      hr.m-0
+            article.job
+              .when Jul 2020 → Dec 2021
+              div
+                h3 Blockchain Developer
+                p.org Freelance
+                ul
+                  li
+                    | Developed and deployed smart contracts for multiple DApps, with a focus on enhancing user
+                    | experience by creating intuitive front-ends.
+                  li
+                    | Committed to continuous learning by staying updated on the latest developments in the Ethereum
+                    | ecosystem, Solidity best practices, and Web3 technologies.
 
-      // Experience
-      section#experience.resume-section
-        .resume-section-content
-          h2.mb-5 Experience
+            article.job
+              .when Aug 2017 → Jun 2021
+              div
+                h3 Translator, Crypto and IT (English to French)
+                p.org
+                  | Freelance · Clients: #[a(href="https://phemex.com") Phemex],
+                  | #[a(href="https://paybis.com/") Paybis], Microsoft Azure
+                p.desc Translated 30+ technical white papers during the 2017/2018 ICO boom.
 
-          // Nethermind: one company, several roles (newest first)
-          .d-flex.flex-column.flex-md-row.justify-content-between.mb-3
-            .flex-grow-1
-              h3.mb-0 Nethermind
-              .subheading.mb-3 Remote
-              p
-                a(href="https://www.nethermind.io/") https://www.nethermind.io/
-            .flex-shrink-0
-              span.text-primary April 2024 - Present
+            article.job
+              .when 2007 → 2012
+              div
+                h3 Earlier
+                p.desc
+                  | Owner and manager of an internet cafe in Bangkok (2011 - 2012), and IT help desk for the 1,500+
+                  | Système U supermarkets in Montpellier (2007 - 2008).
 
-          .role-group.mb-5
-            .role.d-flex.flex-column.flex-md-row.justify-content-between
-              .flex-grow-1
-                h4.mb-2 Tech Lead, AuditAgent
-                p
-                  | • Lead a team of 4 engineers building
-                  | #[a(href="https://auditagent.nethermind.io/") AuditAgent], an AI security scanner for
-                  | Solidity, Cairo and Rust smart contracts.
-                p
-                  | • Run the AI security scanner on Kubernetes, with KEDA autoscaling.
-                p
-                  | • 6M+ lines of code scanned and 44K+ vulnerabilities found so far.
-              .flex-shrink-0
-                span.text-primary November 2024 - Present
+      section#skills.section(aria-labelledby="skills-title")
+        .container
+          .section-head
+            span.kicker Skills · #{ skills.length - 1 } areas
+            h2#skills-title Skills
+          .skills
+            each group in skills
+              .skill-group
+                h3= group.title
+                ul.chips
+                  each item in group.items
+                    li= item
 
-            .role.d-flex.flex-column.flex-md-row.justify-content-between
-              .flex-grow-1
-                h4.mb-2 AI Security Engineer, AuditAgent
-                p
-                  | • Joined the AuditAgent team after my internship to build an AI-powered security solution
-                  | that identifies vulnerabilities in smart contracts.
-              .flex-shrink-0
-                span.text-primary August 2024 - November 2024
-
-            .role.d-flex.flex-column.flex-md-row.justify-content-between
-              .flex-grow-1
-                h4.mb-2 Smart Contracts Auditor (Intern), Audit Team
-                p
-                  | • Audited Solidity (EVM) and Cairo codebases to identify and mitigate security
-                  | vulnerabilities.
-                p
-                  | • Reviewed and analyzed audit findings to ensure the reliability and safety of blockchain
-                  | applications.
-              .flex-shrink-0
-                span.text-primary April 2024 - July 2024
-
-          .d-flex.flex-column.flex-md-row.justify-content-between.mb-5
-            .flex-grow-1
-              h3.mb-0 Lead Blockchain Developer
-              .subheading.mb-3 Meed (formerly SuperUltra) - Remote
-              p
-                | <a href="https://www.meedloyalty.com/">https://www.meedloyalty.com/</a>
-              p
-                | • Engineered and developed 5 blockchain-based solutions (DApps), from smart contracts to
-                | back-end and front-end integration across 4 EVM networks, including Ethereum, Polygon, BSC, and Cronos.
-              p
-                | • Collaborated remotely with a team of 5-10 people in a dynamic startup environment, leveraging agile methodologies.
-              p
-                | • Provided strategic guidance to clients on the development of Web3 products and games, ensuring solid
-                | blockchain integration for improved functionality and user engagement.
-
-            .flex-shrink-0
-              span.text-primary January 2022 - November 2023
-
-          .d-flex.flex-column.flex-md-row.justify-content-between.mb-5
-            .flex-grow-1
-              h3.mb-0 Cryptocurrency Miner
-              .subheading.mb-3 Self-employed - Thailand
-              p
-                | Ran a mining farm of ASIC miners (3 algorithms) and a self-built 6-GPU rig, tuned for efficiency
-                | through BIOS flashing, overclocking and undervolting.
-            .flex-shrink-0
-              span.text-primary October 2017 - July 2022
-
-          .d-flex.flex-column.flex-md-row.justify-content-between.mb-5
-            .flex-grow-1
-              h3.mb-0 Blockchain Developer
-              .subheading.mb-3 Freelance
-              p
-                | • Developed and deployed smart contracts for multiple DApps, with a focus on enhancing user
-                | experience by creating intuitive front-ends.
-              p
-                | • Committed to continuous learning by staying updated on the latest developments in the Ethereum
-                | ecosystem, Solidity best practices, and Web3 technologies.
-            .flex-shrink-0
-              span.text-primary July 2020 - December 2021
-
-          .d-flex.flex-column.flex-md-row.justify-content-between.mb-5
-            .flex-grow-1
-              h3.mb-0 Translator Crypto and IT | English to French
-              .subheading.mb-3 Freelance
-              p
-                | Clients: <a href="https://phemex.com">Phemex</a>, <a href="https://paybis.com/">Paybis</a>, Microsoft Azure
-              p
-                | Translated 30+ technical white papers during the 2017/2018 ICO boom.
-            .flex-shrink-0
-              span.text-primary August 2017 - June 2021
-
-          .d-flex.flex-column.flex-md-row.justify-content-between
-            .flex-grow-1
-              h3.mb-0 Earlier
-              p
-                | Owner and manager of an internet cafe in Bangkok (2011 - 2012), and IT help desk for the
-                | 1,500+ Système U supermarkets in Montpellier (2007 - 2008).
-            .flex-shrink-0
-              span.text-primary 2007 - 2012
-
-      hr.m-0
-
-      // Skills
-      section#skills.resume-section
-        .resume-section-content
-          h2.mb-5 Skills
-          .subheading.mb-3 Programming Languages & Tools
-          ul.list-inline.dev-icons
-            li.list-inline-item(title="Python")
-              +icon("brands/python")
-            li.list-inline-item(title="JavaScript")
-              +icon("brands/square-js")
-            li.list-inline-item(title="React")
-              +icon("brands/react")
-            li.list-inline-item(title="Node.js")
-              +icon("brands/node-js")
-            li.list-inline-item(title="Git")
-              +icon("brands/git")
-            li.list-inline-item(title="GitHub")
-              +icon("brands/github")
-            li.list-inline-item(title="AWS")
-              +icon("brands/aws")
-            li.list-inline-item(title="npm")
-              +icon("brands/npm")
-            li.list-inline-item(title="HTML5")
-              +icon("brands/html5")
-            li.list-inline-item(title="CSS3")
-              +icon("brands/css3-alt")
-            li.list-inline-item(title="Ethereum")
-              +icon("brands/ethereum")
-            li.list-inline-item(title="Bitcoin")
-              +icon("brands/bitcoin")
-          .subheading.mb-3 Workflow
-          ul.icon-list.mb-0
-            li
-              span.icon-list-bullet
-                +icon("solid/check")
-              | Programming Languages - Python, TypeScript, JavaScript, Solidity, Node.js, HTML, CSS
-            li
-              span.icon-list-bullet
-                +icon("solid/check")
-              | AI Engineering - LLM APIs, agent frameworks, MCP
-            li
-              span.icon-list-bullet
-                +icon("solid/check")
-              | Back-end Development - REST APIs, Express.js, Nestjs, MongoDB
-            li
-              span.icon-list-bullet
-                +icon("solid/check")
-              | Front-end Development - React.js, Next.js, React Native
-            li
-              span.icon-list-bullet
-                +icon("solid/check")
-              | DevOps and CI/CD - Git, GitHub, AWS, Vercel, Netlify
-            li
-              span.icon-list-bullet
-                +icon("solid/check")
-              | Blockchain Development - Foundry, Hardhat, Slither, Aderyn, OpenZeppelin, Chainlink
-            li
-              span.icon-list-bullet
-                +icon("solid/check")
-              | Web3 Technologies - Ethers.js, Viem, Wagmi, Web3.js, IPFS
-          .subheading.mt-4.mb-3 Spoken Languages
-          ul.icon-list.mb-0
-            li
-              span.icon-list-bullet
-                +icon("solid/check")
-              | French - Native
-            li
-              span.icon-list-bullet
-                +icon("solid/check")
-              | English - Very Fluent
-            li
-              span.icon-list-bullet
-                +icon("solid/check")
-              | Thai - Intermediate
-
-      hr.m-0
-
-      // Portfolio
-      section#portfolio.resume-section
-        .resume-section-content
-          h2.mb-5 Portfolio & Open Source
-
-          -
-            const projects = [
-              {
-                title: "AuditAgent",
-                desc: "AI pre-audit security scanner for smart contracts, at Nethermind.",
-                stack: "Python, TypeScript, LLM APIs, MCP, Kubernetes, KEDA",
-                url: "https://auditagent.nethermind.io/",
-                img: "auditagent.webp",
-              },
-              {
-                title: "AI Playbook",
-                desc: "A practical guide to using AI well, in products and as a coding tool.",
-                stack: "MkDocs Material, Vercel",
-                url: "https://ai-playbook.pedrojok.com/",
-                img: "ai-playbook.webp",
-              },
-              {
-                title: "Fury Racing",
-                stack: "Foundry, Solidity, Chainlink, Next.js, TypeScript, Nodejs, Lambda",
-                url: "https://fury-racing.vercel.app/",
-                img: "fury.webp",
-                repo: "https://github.com/Pedrojok01/fury-racing",
-              },
-              {
-                title: "Web3 Boilerplate",
-                stack: "Next.js, TypeScript, @web3-react^8, Antd",
-                url: "https://web3-boilerplate.netlify.app",
-                img: "web3_boilerplate.webp",
-                repo: "https://github.com/Pedrojok01/Web3-Boilerplate",
-              },
-              {
-                title: "PackMyNFT",
-                stack: "Foundry, Next.js, TypeScript, Wagmi, Viem, @chakra-ui",
-                url: "https://packmynft.com/",
-                img: "packmynft.webp",
-                repo: "https://github.com/Pedrojok01/PackMyNFT",
-              },
-              {
-                title: "Personal Travel Blog",
-                stack: "Next.js, TypeScript, Antd, AWS S3",
-                url: "https://www.voyageboost.com/",
-                img: "voyageboost.webp",
-              },
-              {
-                title: "MoveMyNFT",
-                stack: "Hardhat, Next.js, TypeScript, Wagmi, Viem, Antd",
-                url: "https://movemynft.com/",
-                img: "movemynft.webp",
-                repo: "https://github.com/Pedrojok01/MoveMyNFT",
-              },
-              {
-                title: "CryptoCats",
-                stack: "Hardhat, Next.js, TypeScript, Wagmi, @chakra-ui",
-                url: "https://crypto-cats.netlify.app/",
-                img: "cryptocats.webp",
-                repo: "https://github.com/Pedrojok01/CryptoCats",
-              },
-            ];
-
-          .row
+      section#projects.section(aria-labelledby="projects-title")
+        .container
+          .section-head
+            span.kicker Portfolio & open source · #{ projects.length } projects
+            h2#projects-title Projects
+          .projects
             each p in projects
               +project(p)
 
-      hr.m-0
+      section#awards.section(aria-labelledby="awards-title")
+        .container.two-col
+          div
+            .section-head
+              span.kicker Awards & certifications
+              h2#awards-title Awards
+            ul.findings
+              li.finding
+                span.place 1#[sup st]
+                strong
+                  a(
+                    href="https://blog.chain.link/block-magic-winners/#gaming_&_consumer_apps_($15_000)"
+                  ) Chainlink Block Magic Hackathon
+                span.meta May 2024
+              li.finding
+                span.place 2#[sup nd]
+                strong
+                  a(href="https://moralis.io/cronos-hackathon/") Moralis x Cronos Hackathon
+                span.meta September 2022
+            p.sub-head Certifications
+            ul.plain-list
+              li
+                span
+                  | Ethereum Dapp Programming · #[a(href="https://academy.moralis.io/") Moralis Academy]
+                span.year 2021
+              li
+                span Ethereum Smart-Contract Security · Ivan on Tech Blockchain Academy
+                span.year 2021
+          div
+            .section-head
+              span.kicker Education
+              h2 Education
+            .education
+              div
+                h3 Moralis Academy
+                p
+                  | Blockchain, DeFi and Smart-Contract Programming ·
+                  | #[span.mono Sep 2020 → Oct 2021]
+              div
+                h3 Paul Valery University
+                p
+                  | Bachelor of Arts in Economics · #[span.mono Sep 2004 → Jun 2007]
 
-      // Education
-      section#education.resume-section
-        .resume-section-content
-          h2.mb-5 Education
-
-          .d-flex.flex-column.flex-md-row.justify-content-between.mb-5
-            .flex-grow-1
-              h3.mb-0 Moralis Academy
-              .subheading.mb-3 Blockchain, DeFi and Smart-Contract Programming
-            .flex-shrink-0
-              span.text-primary September 2020 - October 2021
-
-          .d-flex.flex-column.flex-md-row.justify-content-between
-            .flex-grow-1
-              h3.mb-0 Paul Valery University
-              .subheading.mb-3 Bachelor of Art in Economics
-            .flex-shrink-0
-              span.text-primary September 2004 - June 2007
-
-      hr.m-0
-
-      // Awards
-      section#awards.resume-section
-        .resume-section-content
-          h2.mb-5 Awards & Certifications
-
-          .subheading.mb-3 Hackathons
-          ul.icon-list.mb-0
-            li
-              span.icon-list-bullet
-                +icon("solid/trophy").text-warning
-              | 1#[sup st] Place - <a href="https://blog.chain.link/block-magic-winners/#gaming_&_consumer_apps_($15_000)">Chainlink Block Magic Hackathon</a> - May 2024
-            li.mb-3
-              span.icon-list-bullet
-                +icon("solid/trophy").text-warning
-              | 2#[sup nd] Place - <a href="https://moralis.io/cronos-hackathon/">Moralis x Cronos Hackathon</a> - September 2022
-
-          .subheading.mb-3 Certifications
-          ul.icon-list.mb-0
-            li
-              span.icon-list-bullet
-                +icon("solid/trophy").text-warning
-              | Ethereum Dapp Programming - <a href="https://academy.moralis.io/">Moralis Academy</a> 2021
-            li
-              span.icon-list-bullet
-                +icon("solid/trophy").text-warning
-              | Ethereum Smart-Contract Security - Ivan on Tech Blockchain Academy 2021
-
-      hr.m-0
-
-      // Interests
-      section#interests.resume-section
-        .resume-section-content
-          h2.mb-5 Interests
+      section#interests.section.prose(aria-labelledby="interests-title")
+        .container
+          .section-head
+            span.kicker Off the keyboard
+            h2#interests-title Interests
           p
             | Apart from blockchain development and crypto, I have been traveling a lot around the world, from
-            | playing poker in Vegas, diving in Thailand, skydiving in New Zealand, climbing over
-            | 6,000 m in Ladakh in Northern India, and going over the polar circle in Norway. I eventually
-            | settled in Thailand's countryside, where I enjoy a quiet life with my wife and kids.
-          p.mb-0
+            | playing poker in Vegas, diving in Thailand, skydiving in New Zealand, climbing over 6,000 m in Ladakh
+            | in Northern India, and going over the polar circle in Norway. I eventually settled in Thailand's
+            | countryside, where I enjoy a quiet life with my wife and kids.
+          p
             | Here is my website relating most of my adventures:
-            | <a href="https://www.voyageboost.com">https://www.voyageboost.com</a>
+            | #[a(href="https://www.voyageboost.com") voyageboost.com]
 
-    // Bootstrap JS (same version as the SCSS)
-    script(src=asset("js/bootstrap.bundle.min.js"))
-
-    // Core theme JS
-    script(src=asset("js/scripts.js"))
+    footer#contact.footer
+      .container
+        span.kicker Contact
+        h2 Let's talk.
+        .footer-actions
+          +contact
+        p.footer-fine © 2026 Pierre Estrabaud

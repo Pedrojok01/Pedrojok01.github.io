@@ -1,0 +1,33 @@
+.footer {
+  padding-block: 72px 40px;
+  background: var(--night);
+  color: var(--night-muted);
+  .container {
+    display: grid;
+    gap: 28px;
+  }
+  h2 {
+    color: var(--night-text);
+    font-size: clamp(30px, 4vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+  .kicker {
+    color: #8d9ab3;
+  }
+}
+
+.footer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-fine {
+  padding-top: 22px;
+  border-top: 1px solid #1f2a3e;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--night-faint);
+}

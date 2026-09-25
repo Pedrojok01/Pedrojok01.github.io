@@ -6,10 +6,12 @@ const fontsDir = resolve(rootDir, "dist/assets/fonts");
 
 // Self-hosted fonts (latin subset), declared in src/scss/_fonts.scss.
 const fonts = [
-  "@fontsource/mulish/files/mulish-latin-400-normal.woff2",
-  "@fontsource/mulish/files/mulish-latin-800-normal.woff2",
-  "@fontsource/saira-extra-condensed/files/saira-extra-condensed-latin-500-normal.woff2",
-  "@fontsource/saira-extra-condensed/files/saira-extra-condensed-latin-700-normal.woff2",
+  "@fontsource/schibsted-grotesk/files/schibsted-grotesk-latin-400-normal.woff2",
+  "@fontsource/schibsted-grotesk/files/schibsted-grotesk-latin-500-normal.woff2",
+  "@fontsource/schibsted-grotesk/files/schibsted-grotesk-latin-700-normal.woff2",
+  "@fontsource/schibsted-grotesk/files/schibsted-grotesk-latin-800-normal.woff2",
+  "@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2",
+  "@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2",
 ];
 
 /**

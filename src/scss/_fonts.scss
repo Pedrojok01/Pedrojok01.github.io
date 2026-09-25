@@ -11,15 +11,25 @@
   }
 }
 
-@include font-face("Mulish", "mulish-latin-400-normal", 400);
-@include font-face("Mulish", "mulish-latin-800-normal", 800);
 @include font-face(
-  "Saira Extra Condensed",
-  "saira-extra-condensed-latin-500-normal",
+  "Schibsted Grotesk",
+  "schibsted-grotesk-latin-400-normal",
+  400
+);
+@include font-face(
+  "Schibsted Grotesk",
+  "schibsted-grotesk-latin-500-normal",
   500
 );
 @include font-face(
-  "Saira Extra Condensed",
-  "saira-extra-condensed-latin-700-normal",
+  "Schibsted Grotesk",
+  "schibsted-grotesk-latin-700-normal",
   700
 );
+@include font-face(
+  "Schibsted Grotesk",
+  "schibsted-grotesk-latin-800-normal",
+  800
+);
+@include font-face("IBM Plex Mono", "ibm-plex-mono-latin-400-normal", 400);
+@include font-face("IBM Plex Mono", "ibm-plex-mono-latin-500-normal", 500);

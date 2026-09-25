@@ -1,0 +1,62 @@
+@use "../tokens" as *;
+
+.section {
+  padding-block: 96px;
+  border-top: 1px solid var(--line);
+  &:first-child {
+    border-top: 0;
+  }
+  @include below($bp-sm) {
+    padding-block: 68px;
+  }
+}
+
+.section-head {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 44px;
+  h2 {
+    font-size: clamp(34px, 4.6vw, 52px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  @include below($bp-sm) {
+    margin-bottom: 32px;
+  }
+}
+
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  &::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--blue);
+  }
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 56px;
+  @include below(860px) {
+    grid-template-columns: 1fr;
+    gap: 72px;
+  }
+}
+
+.prose p {
+  max-width: 68ch;
+  & + p {
+    margin-top: 14px;
+  }
+}

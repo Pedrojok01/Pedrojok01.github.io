@@ -1,15 +1,13 @@
-// Fonts
 @use "fonts";
+@use "tokens";
+@use "base";
 
-// Bootstrap (configured)
-@use "bootstrap";
-
-// Global CSS
-@use "global";
-
-// Components
-@use "components/sidenav";
-@use "components/icons";
-
-// Sections
-@use "sections/resume-section";
+@use "components/buttons";
+@use "components/nav";
+@use "components/hero";
+@use "components/sections";
+@use "components/experience";
+@use "components/skills";
+@use "components/projects";
+@use "components/awards";
+@use "components/footer";

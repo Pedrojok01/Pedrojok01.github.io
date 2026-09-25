@@ -1,0 +1,151 @@
+@use "../tokens" as *;
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding-top: env(safe-area-inset-top, 0px);
+  border-bottom: 1px solid transparent;
+  color: var(--night-text);
+  transition:
+    background-color 0.3s,
+    border-color 0.3s,
+    color 0.3s;
+  &.is-solid,
+  &.is-open {
+    background: var(--nav-bg);
+    backdrop-filter: saturate(160%) blur(12px);
+    -webkit-backdrop-filter: saturate(160%) blur(12px);
+    border-bottom-color: var(--line);
+    color: var(--ink);
+  }
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: $nav-height;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: inherit;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+  padding: 0;
+  a {
+    display: block;
+    padding: 6px 12px;
+    border-radius: 999px;
+    color: inherit;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    opacity: 0.78;
+    &:hover,
+    &.is-active {
+      opacity: 1;
+      background: rgba(127, 145, 190, 0.16);
+    }
+  }
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-button {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 0.85;
+  &:hover {
+    opacity: 1;
+    background: rgba(127, 145, 190, 0.16);
+  }
+}
+
+.menu-button {
+  display: none;
+  font-size: 19px;
+}
+
+// Show the icon of the theme the button switches to
+.theme-icon-light {
+  display: none;
+}
+@mixin theme-icons-dark {
+  .theme-icon-dark {
+    display: none;
+  }
+  .theme-icon-light {
+    display: contents;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    @include theme-icons-dark;
+  }
+}
+:root[data-theme="dark"] {
+  @include theme-icons-dark;
+}
+
+@include below($bp-md) {
+  .menu-button {
+    display: inline-grid;
+  }
+  .nav-links {
+    position: absolute;
+    top: calc(#{$nav-height} + env(safe-area-inset-top, 0px));
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 18px 16px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    a {
+      padding: 12px 4px;
+      border-radius: 0;
+      font-size: 13px;
+    }
+  }
+  .nav:not(.is-open) .nav-links {
+    display: none;
+  }
+}

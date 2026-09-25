@@ -11,7 +11,8 @@
     "clean": "node scripts/clean.js",
     "start": "node --run build && node scripts/start.js",
     "start:debug": "node --run build && node scripts/start.js --debug",
-    "prettier": "prettier --write \"**/*.{js,json,html,css,scss,yml,pug}\" --plugin=\"@prettier/plugin-pug\""
+    "prettier": "prettier --write \"**/*.{js,json,html,css,scss,yml,pug}\" --plugin=\"@prettier/plugin-pug\"",
+    "og-image": "node --run build && node scripts/og-image.js && node --run build"
   },
   "description": "Personal portfolio and resume of Pierre Estrabaud",
   "homepage": "https://pedrojok.com",
@@ -30,17 +31,19 @@
     "url": "https://github.com/Pedrojok01/Pedrojok01.github.io"
   },
   "dependencies": {
-    "bootstrap": "5.3.8"
+    "three": "0.186.1"
   },
   "devDependencies": {
-    "@fontsource/mulish": "5.3.0",
-    "@fontsource/saira-extra-condensed": "5.3.0",
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "@fontsource/schibsted-grotesk": "5.3.0",
     "@fortawesome/fontawesome-free": "7.3.1",
     "@prettier/plugin-pug": "3.5.0",
     "autoprefixer": "10.6.1",
     "browser-sync": "3.0.4",
     "chokidar": "5.0.0",
     "concurrently": "10.0.5",
+    "esbuild": "0.28.2",
+    "playwright-core": "1.63.0",
     "postcss": "8.5.28",
     "prettier": "3.9.9",
     "pug": "3.0.4",
