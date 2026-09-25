@@ -1,28 +1,19 @@
 {
-  "title": "Resume",
   "name": "pedrojok-resume",
   "version": "7.0.22",
   "scripts": {
-    "build": "npm run clean && npm run build:pug && npm run build:scss && npm run build:scripts && npm run build:assets && npm run update-root",
+    "build": "node --run clean && node --run build:pug && node --run build:scss && node --run build:scripts && node --run build:assets && node --run update-root",
     "build:assets": "node scripts/build-assets.js",
     "build:pug": "node scripts/build-pug.js",
     "build:scripts": "node scripts/build-scripts.js",
     "build:scss": "node scripts/build-scss.js",
     "update-root": "node scripts/update-root-index.js",
     "clean": "node scripts/clean.js",
-    "start": "npm run build && node scripts/start.js",
-    "start:debug": "npm run build && node scripts/start-debug.js",
+    "start": "node --run build && node scripts/start.js",
+    "start:debug": "node --run build && node scripts/start.js --debug",
     "prettier": "prettier --write \"**/*.{js,json,html,css,scss,yml,pug}\" --plugin=\"@prettier/plugin-pug\""
   },
-  "description": "Resume is a simple, yet elegant resume and CV theme for Bootstrap 5.",
-  "keywords": [
-    "css",
-    "sass",
-    "html",
-    "responsive",
-    "theme",
-    "template"
-  ],
+  "description": "Personal portfolio and resume of Pierre Estrabaud",
   "homepage": "https://pedrojok.com",
   "author": "Pedrojok01",
   "contributors": [
@@ -39,18 +30,24 @@
     "url": "https://github.com/Pedrojok01/Pedrojok01.github.io"
   },
   "dependencies": {
-    "bootstrap": "5.3.2"
+    "bootstrap": "5.3.8"
   },
   "devDependencies": {
-    "@prettier/plugin-pug": "3.0.0",
-    "autoprefixer": "10.4.16",
-    "browser-sync": "2.29.3",
-    "chokidar": "3.5.3",
-    "concurrently": "^8.2.2",
-    "fs-extra": "^11.2.0",
-    "postcss": "8.4.32",
-    "prettier": "3.1.0",
-    "pug": "3.0.2",
-    "sass": "1.69.5"
-  }
+    "@fontsource/mulish": "5.3.0",
+    "@fontsource/saira-extra-condensed": "5.3.0",
+    "@fortawesome/fontawesome-free": "7.3.1",
+    "@prettier/plugin-pug": "3.5.0",
+    "autoprefixer": "10.6.1",
+    "browser-sync": "3.0.4",
+    "chokidar": "5.0.0",
+    "concurrently": "10.0.5",
+    "postcss": "8.5.28",
+    "prettier": "3.9.9",
+    "pug": "3.0.4",
+    "sass": "1.105.0"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "yarn@1.22.22"
 }

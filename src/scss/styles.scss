@@ -1,15 +1,15 @@
-// Import variables
-@import "./variables.scss";
+// Fonts
+@use "fonts";
 
-// Import Bootstrap
-@import "bootstrap/scss/bootstrap.scss";
+// Bootstrap (configured)
+@use "bootstrap";
 
 // Global CSS
-@import "./global.scss";
+@use "global";
 
 // Components
-@import "./components/sidenav.scss";
-@import "./components/icons.scss";
+@use "components/sidenav";
+@use "components/icons";
 
 // Sections
-@import "./sections/resume-section.scss";
+@use "sections/resume-section";

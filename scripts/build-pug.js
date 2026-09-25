@@ -1,41 +1,19 @@
-import { resolve, dirname, extname, join } from "path";
-import { fileURLToPath } from "url";
-import { readdir, stat } from "fs/promises";
+import { readdir } from "node:fs/promises";
+import { extname, join, resolve } from "node:path";
 
 import { renderPug } from "./render-pug.js";
 
-// Get the file URL for the current file
-const __filename = fileURLToPath(import.meta.url);
-const pugPath = resolve(dirname(__filename), "../src/pug");
+const pugPath = resolve(import.meta.dirname, "../src/pug");
+const EXCLUDE_REGEX = /include|mixin|\/pug\/layouts\//;
 
-// Recursive function to process each file and subdirectory
-async function processDirectory(directoryPath) {
-  const files = await readdir(directoryPath);
-  for (const file of files) {
-    const filePath = join(directoryPath, file);
-    const stats = await stat(filePath);
-    if (stats.isDirectory()) {
-      await processDirectory(filePath); // Recurse into subdirectory
-    } else {
-      processFile(filePath); // Process individual file
-    }
-  }
-}
-
-// Kick off the processing with the src/pug directory
-processDirectory(pugPath).catch((error) => {
-  console.error("Error processing directory:", error);
+// Render every page under src/pug, skipping includes, mixins and layouts.
+const entries = await readdir(pugPath, {
+  recursive: true,
+  withFileTypes: true,
 });
+const pages = entries
+  .filter((entry) => entry.isFile() && extname(entry.name) === ".pug")
+  .map((entry) => join(entry.parentPath, entry.name))
+  .filter((filePath) => !EXCLUDE_REGEX.test(filePath));
 
-/**
- * Processes a file if it has a .pug extension and does not match excluded paths.
- * @param {string} filePath - The path of the file to process.
- */
-function processFile(filePath) {
-  const isPugFile = extname(filePath) === ".pug";
-  const isExcluded = /include|mixin|\/pug\/layouts\//.test(filePath);
-
-  if (isPugFile && !isExcluded) {
-    renderPug(filePath);
-  }
-}
+await Promise.all(pages.map(renderPug));

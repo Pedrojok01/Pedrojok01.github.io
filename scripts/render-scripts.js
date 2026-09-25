@@ -1,46 +1,26 @@
-import { promises as fs } from "fs";
-import { resolve, dirname } from "path";
-import { fileURLToPath } from "url";
+import { copyFile, mkdir } from "node:fs/promises";
+import { resolve } from "node:path";
 
-import packageJSON from "../package.json" assert { type: "json" };
-const { title, version, homepage, author, license, name } = packageJSON;
+const rootDir = resolve(import.meta.dirname, "..");
+const destDir = resolve(rootDir, "dist/js");
 
-// Get the file URL for the current file
-const __filename = fileURLToPath(import.meta.url);
+// Bootstrap JS is shipped from node_modules so it always matches the SCSS version.
+const files = [
+  [resolve(rootDir, "src/js/scripts.js"), "scripts.js"],
+  [
+    resolve(rootDir, "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"),
+    "bootstrap.bundle.min.js",
+  ],
+];
 
 export async function renderScripts() {
   try {
-    const sourcePath = resolve(dirname(__filename), "../src/js/scripts.js");
-    const destPath = resolve(dirname(__filename), "../dist/js/scripts.js");
-    const destPathDirname = dirname(destPath);
-
-    const copyright = getCopyrightHeader();
-    const scriptsJS = await readSourceFile(sourcePath);
-
-    await ensureDirectoryExists(destPathDirname);
-    await writeToFile(destPath, copyright + scriptsJS);
+    await mkdir(destDir, { recursive: true });
+    await Promise.all(
+      files.map(([src, name]) => copyFile(src, resolve(destDir, name))),
+    );
   } catch (error) {
     console.error("### ERROR: Failed to render scripts:", error);
+    process.exitCode = 1;
   }
-}
-
-function getCopyrightHeader() {
-  return `/*!
-    * Start Bootstrap - ${title} v${version} (${homepage})
-    * Copyright 2013-${new Date().getFullYear()} ${author}
-    * Licensed under ${license} (https://github.com/Pedrojok01/${name}/blob/master/LICENSE)
-    */
-    `;
-}
-
-async function readSourceFile(filePath) {
-  return fs.readFile(filePath, "utf8");
-}
-
-async function ensureDirectoryExists(dirPath) {
-  await fs.mkdir(dirPath, { recursive: true });
-}
-
-async function writeToFile(filePath, content) {
-  return fs.writeFile(filePath, content, "utf8");
 }

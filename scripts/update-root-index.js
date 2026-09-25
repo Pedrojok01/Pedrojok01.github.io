@@ -1,12 +1,8 @@
-import { unlink, copyFile, readFile, writeFile } from "fs/promises";
-import { resolve, dirname } from "path";
-import { fileURLToPath } from "url";
-
-// Get the file URL for the current file
-const __filename = fileURLToPath(import.meta.url);
+import { readFile, writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
 
 // Resolve paths
-const rootDir = resolve(dirname(__filename), "../");
+const rootDir = resolve(import.meta.dirname, "..");
 const distDir = resolve(rootDir, "dist");
 const oldIndexPath = resolve(rootDir, "index.html");
 const newIndexPath = resolve(distDir, "index.html");
@@ -27,6 +23,7 @@ async function updateRootIndex() {
     await writeFile(oldIndexPath, updatedContent);
   } catch (error) {
     console.error("Error updating root index.html:", error.message);
+    process.exitCode = 1;
   }
 }
 

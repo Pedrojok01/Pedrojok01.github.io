@@ -1,12 +1,9 @@
 import { watch } from "chokidar";
-import pkg from "lodash";
 
 import { renderAssets } from "./render-assets.js";
 import { renderPug } from "./render-pug.js";
 import { renderScripts } from "./render-scripts.js";
 import { renderSCSS } from "./render-scss.js";
-
-const { each } = pkg;
 
 const PUG_REGEX = /\.pug$/;
 const SCSS_REGEX = /\.scss$/;
@@ -19,7 +16,7 @@ const watcher = watch("src", {
 });
 
 let READY = false;
-const allPugFiles = {};
+const allPugFiles = new Set();
 
 process.title = "pug-watch";
 process.stdout.write("Loading");
@@ -30,13 +27,13 @@ watcher
   .on("ready", () => {
     READY = true;
     console.log(" READY TO ROLL!");
-    handleSCSS();
+    renderSCSS();
   });
 
 function processFile(filePath, watchEvent) {
   if (!READY) {
     if (PUG_REGEX.test(filePath) && !EXCLUDE_REGEX.test(filePath)) {
-      allPugFiles[filePath] = true;
+      allPugFiles.add(filePath);
       process.stdout.write(".");
     }
     return;
@@ -45,7 +42,7 @@ function processFile(filePath, watchEvent) {
   console.log(`### INFO: File event: ${watchEvent}: ${filePath}`);
 
   if (PUG_REGEX.test(filePath)) return handlePug(filePath, watchEvent);
-  if (SCSS_REGEX.test(filePath) && watchEvent === "change") return handleSCSS();
+  if (SCSS_REGEX.test(filePath) && watchEvent === "change") return renderSCSS();
   if (JS_REGEX.test(filePath)) return renderScripts();
   if (ASSETS_REGEX.test(filePath)) return renderAssets();
 }
@@ -58,9 +55,5 @@ function handlePug(filePath, watchEvent) {
 
 function renderAllPug() {
   console.log("### INFO: Rendering All");
-  each(allPugFiles, (value, filePath) => renderPug(filePath));
-}
-
-function handleSCSS() {
-  renderSCSS();
+  allPugFiles.forEach((filePath) => renderPug(filePath));
 }

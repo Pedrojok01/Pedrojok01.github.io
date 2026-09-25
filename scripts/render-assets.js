@@ -1,24 +1,36 @@
-import fsExtra from "fs-extra";
-import { resolve, dirname } from "path";
-import { fileURLToPath } from "url";
+import { copyFile, cp, mkdir } from "node:fs/promises";
+import { basename, resolve } from "node:path";
 
-// Get the file URL for the current file
-const __filename = fileURLToPath(import.meta.url);
+const rootDir = resolve(import.meta.dirname, "..");
+const fontsDir = resolve(rootDir, "dist/assets/fonts");
+
+// Self-hosted fonts (latin subset), declared in src/scss/_fonts.scss.
+const fonts = [
+  "@fontsource/mulish/files/mulish-latin-400-normal.woff2",
+  "@fontsource/mulish/files/mulish-latin-800-normal.woff2",
+  "@fontsource/saira-extra-condensed/files/saira-extra-condensed-latin-500-normal.woff2",
+  "@fontsource/saira-extra-condensed/files/saira-extra-condensed-latin-700-normal.woff2",
+];
 
 /**
- * Copies the assets from the source directory to the destination directory.
+ * Copies src/assets into dist/assets, plus the fonts from node_modules.
  */
 export async function renderAssets() {
-  const sourcePath = resolve(dirname(__filename), "../src/assets");
-  const destPath = resolve(dirname(__filename), "../dist/assets/.");
-
   try {
-    // Check if source path exists
-    await fsExtra.access(sourcePath);
-    // Perform the copy operation
-    await fsExtra.copy(sourcePath, destPath);
+    await cp(resolve(rootDir, "src/assets"), resolve(rootDir, "dist/assets"), {
+      recursive: true,
+    });
+    await mkdir(fontsDir, { recursive: true });
+    await Promise.all(
+      fonts.map((font) =>
+        copyFile(
+          resolve(rootDir, "node_modules", font),
+          resolve(fontsDir, basename(font)),
+        ),
+      ),
+    );
   } catch (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1);
+    console.error("### ERROR: Failed to copy assets:", error);
+    process.exitCode = 1;
   }
 }

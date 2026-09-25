@@ -1,0 +1,25 @@
+// Self-hosted fonts, copied from @fontsource by scripts/render-assets.js.
+// Keep in sync with the preload links in src/pug/index.pug.
+
+@mixin font-face($family, $file, $weight) {
+  @font-face {
+    font-family: $family;
+    font-style: normal;
+    font-weight: $weight;
+    font-display: swap;
+    src: url("../assets/fonts/#{$file}.woff2") format("woff2");
+  }
+}
+
+@include font-face("Mulish", "mulish-latin-400-normal", 400);
+@include font-face("Mulish", "mulish-latin-800-normal", 800);
+@include font-face(
+  "Saira Extra Condensed",
+  "saira-extra-condensed-latin-500-normal",
+  500
+);
+@include font-face(
+  "Saira Extra Condensed",
+  "saira-extra-condensed-latin-700-normal",
+  700
+);

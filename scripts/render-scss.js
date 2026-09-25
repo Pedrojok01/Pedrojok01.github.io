@@ -1,47 +1,33 @@
-import { promises as fs } from "fs";
-import { resolve, dirname } from "path";
-import { fileURLToPath } from "url";
+import { mkdir, writeFile } from "node:fs/promises";
+import { dirname, resolve } from "node:path";
 
 import autoprefixer from "autoprefixer";
 import postcss from "postcss";
-import { renderSync } from "sass";
+import { compile } from "sass";
 
-// Get the file URL for the current file
-const __filename = fileURLToPath(import.meta.url);
+const rootDir = resolve(import.meta.dirname, "..");
+const stylesPath = resolve(rootDir, "src/scss/styles.scss");
+const destPath = resolve(rootDir, "dist/css/styles.css");
 
 export async function renderSCSS() {
-  const destPath = resolve(dirname(__filename), "../dist/css/styles.css");
-  const stylesPath = resolve(dirname(__filename), "../src/scss/styles.scss");
-
   try {
-    await ensureDirectoryExists(destPath);
-    const results = renderSass(stylesPath);
-    await processAndWriteCSS(results.css, destPath);
+    const { css } = compile(stylesPath, {
+      loadPaths: [resolve(rootDir, "node_modules")],
+      style: "compressed",
+      // Bootstrap 5.3 still uses @import and legacy color functions.
+      quietDeps: true,
+    });
+
+    const result = await postcss([autoprefixer]).process(css, {
+      from: undefined,
+      to: "styles.css",
+    });
+    result.warnings().forEach((warn) => console.warn(warn.toString()));
+
+    await mkdir(dirname(destPath), { recursive: true });
+    await writeFile(destPath, result.css);
   } catch (error) {
     console.error("### ERROR: Failed to render SCSS:", error);
+    process.exitCode = 1;
   }
-}
-
-function renderSass(stylesPath) {
-  const options = {
-    file: stylesPath,
-    includePaths: [resolve(dirname(__filename), "../node_modules")],
-  };
-
-  return renderSync(options);
-}
-
-async function ensureDirectoryExists(destPath) {
-  const destPathDirname = dirname(destPath);
-  await fs.mkdir(destPathDirname, { recursive: true });
-}
-
-async function processAndWriteCSS(css, destPath) {
-  const result = await postcss([autoprefixer]).process(css, {
-    from: undefined,
-    to: "styles.css",
-  });
-
-  result.warnings().forEach((warn) => console.warn(warn.toString()));
-  await fs.writeFile(destPath, result.css);
 }

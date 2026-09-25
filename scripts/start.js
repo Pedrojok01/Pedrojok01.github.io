@@ -1,47 +1,33 @@
-import { resolve, dirname } from "path";
-import { fileURLToPath } from "url";
+import { resolve } from "node:path";
 
 import concurrently from "concurrently";
 
-// Get the file URL for the current file
-const __filename = fileURLToPath(import.meta.url);
-
+// `node scripts/start.js --debug` attaches the Node inspector to the watcher.
+const debug = process.argv.includes("--debug");
 const browserSyncPath = resolve(
-  dirname(__filename),
+  import.meta.dirname,
   "../node_modules/.bin/browser-sync",
 );
 
-const commands = [
+const { result } = concurrently(
+  [
+    {
+      command: `node ${debug ? "--inspect " : ""}scripts/sb-watch.js`,
+      name: "SB_WATCH",
+      prefixColor: "bgBlue.bold",
+    },
+    {
+      command: `"${browserSyncPath}" --reload-delay 2000 --reload-debounce 2000 dist -w --no-online`,
+      name: "SB_BROWSER_SYNC",
+      prefixColor: "bgGreen.bold",
+    },
+  ],
   {
-    command: "node scripts/sb-watch.js",
-    name: "SB_WATCH",
-    prefixColor: "bgBlue.bold",
+    prefix: "name",
+    killOthersOn: ["failure", "success"],
   },
-  {
-    command: `"${browserSyncPath}" --reload-delay 2000 --reload-debounce 2000 dist -w --no-online`,
-    name: "SB_BROWSER_SYNC",
-    prefixColor: "bgGreen.bold",
-  },
-];
+);
 
-const config = {
-  prefix: "name",
-  killOthers: ["failure", "success"],
-};
-
-/**
- * Runs the specified commands concurrently.
- * Logs success if all commands run successfully,
- * or an error message if any command fails.
- */
-function runCommands() {
-  try {
-    concurrently(commands, config);
-    console.log("Success");
-  } catch (error) {
-    console.error("Failure:", error);
-    process.exit(1);
-  }
-}
-
-runCommands();
+result.catch(() => {
+  process.exitCode = 1;
+});

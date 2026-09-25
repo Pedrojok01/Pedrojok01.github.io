@@ -1,0 +1,17 @@
+// Bootstrap, configured with the theme overrides.
+// Partials that need Bootstrap variables or mixins `@use "../bootstrap" as *`.
+
+@use "variables/colors";
+@use "variables/typography";
+
+@forward "bootstrap/scss/bootstrap" with (
+  $blue: colors.$blue,
+  $primary: colors.$primary,
+  $font-family-base: typography.$font-family-base,
+  $headings-font-family: typography.$headings-font-family,
+  $headings-font-weight: typography.$headings-font-weight,
+  $headings-color: typography.$headings-color,
+  $h1-font-size: typography.$h1-font-size,
+  $h2-font-size: typography.$h2-font-size,
+  $h3-font-size: typography.$h3-font-size
+);
