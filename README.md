@@ -18,6 +18,7 @@ npm start            # build, then watch src/ and serve dist/ with live reload
 npm run build        # full build into dist/
 npm run og-image     # re-render src/assets/img/og.jpg (1200x630) from the hero
 npm run prettier     # format the sources
+npm run format:check # check formatting without writing (used in CI)
 ```
 
 `npm run start:debug` does the same as `npm start` with the Node inspector attached to the watcher.
@@ -44,6 +45,9 @@ The build writes everything to `dist/`, which is not committed. Fonts are self-h
 
 Every push to `master` runs `.github/workflows/deploy.yml`, which builds the site and publishes `dist/` to
 GitHub Pages. The custom domain is set in the repository's Pages settings.
+
+Pull requests and pushes to `master` also run `.github/workflows/check.yml`: formatting, build, external
+link check (lychee) and Lighthouse, with the score thresholds in `lighthouserc.json`.
 
 ## License
 

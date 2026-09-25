@@ -10,8 +10,9 @@
     "clean": "node scripts/clean.js",
     "start": "node --run build && node scripts/start.js",
     "start:debug": "node --run build && node scripts/start.js --debug",
-    "prettier": "prettier --write \"**/*.{js,json,html,css,scss,yml,pug}\" --plugin=\"@prettier/plugin-pug\"",
-    "og-image": "node --run build && node scripts/og-image.js && node --run build"
+    "prettier": "prettier --write \"**/*.{js,json,css,scss,yml,md,pug}\" --plugin=@prettier/plugin-pug",
+    "og-image": "node --run build && node scripts/og-image.js && node --run build",
+    "format:check": "prettier --check \"**/*.{js,json,css,scss,yml,md,pug}\" --plugin=@prettier/plugin-pug"
   },
   "description": "Personal portfolio and resume of Pierre Estrabaud",
   "homepage": "https://pedrojok.com",

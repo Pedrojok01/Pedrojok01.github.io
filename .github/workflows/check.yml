@@ -1,0 +1,44 @@
+# Quality gate for pull requests (and pushes to master): formatting, build,
+# external links and Lighthouse scores. Deploys are handled by deploy.yml.
+name: Check
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Formatting
+        run: npm run format:check
+      - name: Build
+        run: npm run build
+      # External links only; LinkedIn (999) and some sites (403) block bots.
+      - name: Links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --scheme https --scheme http
+            --accept 200..=299,403,429,999
+            --max-retries 2
+            dist/index.html
+          fail: true
+      - name: Lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true
