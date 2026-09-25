@@ -1,11 +1,12 @@
 include mixins/icon
+include mixins/project
 
 -
   const site = {
     url: "https://pedrojok.com/",
-    title: "Resume - Pierre E.",
+    title: "Pierre Estrabaud · Tech Lead, AI Security Tooling",
     description:
-      "Pierre Estrabaud - smart contract developer, blockchain engineer and security researcher. Solidity and Cairo audits, full-stack Web3 development.",
+      "Pierre Estrabaud - software engineer and Tech Lead on AuditAgent at Nethermind, working on AI, security and blockchain.",
     image: "https://pedrojok.com/dist/assets/img/profile.jpg",
   };
 
@@ -90,24 +91,15 @@ html(lang="en")
       section#about.resume-section
         .resume-section-content
           h1.mb-0
-            | Pierre
-            span.text-primary Estrabaud
+            | Pierre #[span.text-primary Estrabaud]
           .subheading.mb-5
-            | Smart Contracts Developer · Blockchain Engineer · Security Researcher ·
-            a(href="mailto:pierre.estrabaud@protonmail.com") pierre.estrabaud@protonmail.com
+            | Tech Lead · Software Engineer · AI Security Tooling ·
+            | #[a(href="mailto:pierre.estrabaud@protonmail.com") pierre.estrabaud@protonmail.com]
 
-          p.lead.mb-3
-            |
-            | With a rich 7-year journey in the crypto industry and a 4 years dedicated to developing decentralized
-            | applications (dApps) on EVM networks, bring a comprehensive understanding of Ethereum ecosystem technologies,
-            | Web3 application development, and smart contract security. My expertise extends to crafting
-            | robust smart contracts using Solidity, identifying and mitigating common attack
-            | vectors, and optimizing gas costs to enhance efficiency and security. In addition,
-            | my background in Next.js and React.js enables me to integrate complex smart
-            | contract functionalities with intuitive and engaging user interfaces.
           p.lead.mb-5
-            | Ready to drive innovation in smart contract development and full-stack blockchain engineering ?
-            | I am your go-to expert for cutting-edge dApp solutions.
+            | I'm a software engineer working at the intersection of AI, security and blockchain. I lead
+            | engineering on #[a(href="https://auditagent.nethermind.io/") AuditAgent], Nethermind's AI security
+            | scanner for smart contracts, after several years building dApps and writing Solidity smart contracts.
 
           .social-icons.lead.mb-5
             a.social-icon(
@@ -125,11 +117,9 @@ html(lang="en")
             a.social-icon(href="https://blog.pedrojok.com", aria-label="Blog")
               +icon("solid/globe")
 
-          p
-            | Want to know more about Solidity, web3 security and catch the flag (CTF) challenges?
-          h3.lead.mb-3
-            | Check out my blog:
-            a(href="https://blog.pedrojok.com") Web3 Security
+          p.mb-3
+            | I also write about web3 security and CTF challenges on my blog:
+            | #[a(href="https://blog.pedrojok.com") Web3 Security].
 
       hr.m-0
 
@@ -138,23 +128,51 @@ html(lang="en")
         .resume-section-content
           h2.mb-5 Experience
 
-          .d-flex.flex-column.flex-md-row.justify-content-between.mb-5
+          // Nethermind: one company, several roles (newest first)
+          .d-flex.flex-column.flex-md-row.justify-content-between.mb-3
             .flex-grow-1
-              h3.mb-0 Smart Contracts Security Researcher Engineer
-              .subheading.mb-3 Nethermind - Remote
+              h3.mb-0 Nethermind
+              .subheading.mb-3 Remote
               p
-                | <a href="https://www.nethermind.io/">https://www.nethermind.io/</a>
-              p
-                | • Develop a security solution for smart contracts using AI and machine learning to identify and mitigate
-                | security vulnerabilities in smart contracts.
-              p
-                | • Conduct thorough audits of Solidity (EVM) and Cairo code bases to identify and
-                | mitigate security vulnerabilities in smart contracts.
-              p
-                | • Review and analyze audit findings to ensure the reliability and safety of blockchain applications.
-
+                a(href="https://www.nethermind.io/") https://www.nethermind.io/
             .flex-shrink-0
               span.text-primary April 2024 - Present
+
+          .role-group.mb-5
+            .role.d-flex.flex-column.flex-md-row.justify-content-between
+              .flex-grow-1
+                h4.mb-2 Tech Lead, AuditAgent
+                p
+                  | • Lead a team of 4 engineers building
+                  | #[a(href="https://auditagent.nethermind.io/") AuditAgent], an AI security scanner for
+                  | Solidity, Cairo and Rust smart contracts.
+                p
+                  | • Run the AI security scanner on Kubernetes, with KEDA autoscaling.
+                p
+                  | • 6M+ lines of code scanned and 44K+ vulnerabilities found so far.
+              .flex-shrink-0
+                span.text-primary November 2024 - Present
+
+            .role.d-flex.flex-column.flex-md-row.justify-content-between
+              .flex-grow-1
+                h4.mb-2 AI Security Engineer, AuditAgent
+                p
+                  | • Joined the AuditAgent team after my internship to build an AI-powered security solution
+                  | that identifies vulnerabilities in smart contracts.
+              .flex-shrink-0
+                span.text-primary August 2024 - November 2024
+
+            .role.d-flex.flex-column.flex-md-row.justify-content-between
+              .flex-grow-1
+                h4.mb-2 Smart Contracts Auditor (Intern), Audit Team
+                p
+                  | • Audited Solidity (EVM) and Cairo codebases to identify and mitigate security
+                  | vulnerabilities.
+                p
+                  | • Reviewed and analyzed audit findings to ensure the reliability and safety of blockchain
+                  | applications.
+              .flex-shrink-0
+                span.text-primary April 2024 - July 2024
 
           .d-flex.flex-column.flex-md-row.justify-content-between.mb-5
             .flex-grow-1
@@ -172,16 +190,15 @@ html(lang="en")
                 | blockchain integration for improved functionality and user engagement.
 
             .flex-shrink-0
-              span.text-primary January 2022 - Novembre 2023
+              span.text-primary January 2022 - November 2023
 
           .d-flex.flex-column.flex-md-row.justify-content-between.mb-5
             .flex-grow-1
               h3.mb-0 Cryptocurrency Miner
               .subheading.mb-3 Self-employed - Thailand
               p
-                | Set up and monitored a cryptocurrency mining farm of multiple ASIC miners running on 3 different
-                | algorithms and a self-built 6xGPU rig (Ethash), applying optimization techniques like bios flashing,
-                | overclocking, and undervolting to maximize efficiency and profitability.
+                | Ran a mining farm of ASIC miners (3 algorithms) and a self-built 6-GPU rig, tuned for efficiency
+                | through BIOS flashing, overclocking and undervolting.
             .flex-shrink-0
               span.text-primary October 2017 - July 2022
 
@@ -205,40 +222,18 @@ html(lang="en")
               p
                 | Clients: <a href="https://phemex.com">Phemex</a>, <a href="https://paybis.com/">Paybis</a>, Microsoft Azure
               p
-                | • Translated over 30 technical white papers during the ICO boom in 2017/2018.
-              p
-                | • Demonstrated expertise in technical fields and industry-specific terminology,
-                | and managed to convey complex technical information to a non-technical
-                | audience.
-              p
-                | • Delivered 100% of projects within tight deadlines through effective scheduling.
+                | Translated 30+ technical white papers during the 2017/2018 ICO boom.
             .flex-shrink-0
               span.text-primary August 2017 - June 2021
 
-          .d-flex.flex-column.flex-md-row.justify-content-between.mb-5
-            .flex-grow-1
-              h3.mb-0 Internet Cafe Manager
-              .subheading.mb-3 Owner - Bangkok
-              p
-                | • Built, optimized, and maintained 20 computers, including the main server.
-              p
-                | • Developed, supervised, and secured the whole network infrastructure.
-              p
-                | • Managed the accounting and financial aspects of the operation.
-            .flex-shrink-0
-              span.text-primary January 2011 - June 2012
-
           .d-flex.flex-column.flex-md-row.justify-content-between
             .flex-grow-1
-              h3.mb-0 Help Desk and Technical Support Hotliner
-              .subheading.mb-3 Système U - Montpellier
+              h3.mb-0 Earlier
               p
-                | <a href="https://www.magasins-u.com/">https://www.magasins-u.com/</a>
-              p
-                | Provided technical support to over 1,500 supermarkets, managing SQL database updates and resolving
-                | a broad range of IT issues, underscoring my problem-solving skills and customer service orientation.
+                | Owner and manager of an internet cafe in Bangkok (2011 - 2012), and IT help desk for the
+                | 1,500+ Système U supermarkets in Montpellier (2007 - 2008).
             .flex-shrink-0
-              span.text-primary July 2007 - March 2008
+              span.text-primary 2007 - 2012
 
       hr.m-0
 
@@ -248,42 +243,40 @@ html(lang="en")
           h2.mb-5 Skills
           .subheading.mb-3 Programming Languages & Tools
           ul.list-inline.dev-icons
-            li.list-inline-item(title="Ethereum")
-              +icon("brands/ethereum")
-            li.list-inline-item(title="Bitcoin")
-              +icon("brands/bitcoin")
-            li.list-inline-item(title="HTML5")
-              +icon("brands/html5")
-            li.list-inline-item(title="CSS3")
-              +icon("brands/css3-alt")
+            li.list-inline-item(title="Python")
+              +icon("brands/python")
             li.list-inline-item(title="JavaScript")
               +icon("brands/square-js")
             li.list-inline-item(title="React")
               +icon("brands/react")
             li.list-inline-item(title="Node.js")
               +icon("brands/node-js")
-            li.list-inline-item(title="npm")
-              +icon("brands/npm")
             li.list-inline-item(title="Git")
               +icon("brands/git")
-            li.list-inline-item(title="AWS")
-              +icon("brands/aws")
             li.list-inline-item(title="GitHub")
               +icon("brands/github")
+            li.list-inline-item(title="AWS")
+              +icon("brands/aws")
+            li.list-inline-item(title="npm")
+              +icon("brands/npm")
+            li.list-inline-item(title="HTML5")
+              +icon("brands/html5")
+            li.list-inline-item(title="CSS3")
+              +icon("brands/css3-alt")
+            li.list-inline-item(title="Ethereum")
+              +icon("brands/ethereum")
+            li.list-inline-item(title="Bitcoin")
+              +icon("brands/bitcoin")
           .subheading.mb-3 Workflow
           ul.icon-list.mb-0
             li
               span.icon-list-bullet
                 +icon("solid/check")
-              | Programming Languages - Solidity, Javascript, TypeScript, Node.js, HTML, CSS
+              | Programming Languages - Python, TypeScript, JavaScript, Solidity, Node.js, HTML, CSS
             li
               span.icon-list-bullet
                 +icon("solid/check")
-              | Blockchain Development - Foundry, Hardhat, Slither, Aderyn, OpenZeppelin, Chainlink
-            li
-              span.icon-list-bullet
-                +icon("solid/check")
-              | Front-end Development - React.js, Next.js, React Native
+              | AI Engineering - LLM APIs, agent frameworks, MCP
             li
               span.icon-list-bullet
                 +icon("solid/check")
@@ -291,11 +284,19 @@ html(lang="en")
             li
               span.icon-list-bullet
                 +icon("solid/check")
-              | Web3 Technologies - Ethers.js, Viem, Wagmi, Web3.js, IPFS
+              | Front-end Development - React.js, Next.js, React Native
             li
               span.icon-list-bullet
                 +icon("solid/check")
-              | DevOps and CI/CD - Git, Github, AWS, Vercel, Netlify
+              | DevOps and CI/CD - Git, GitHub, AWS, Vercel, Netlify
+            li
+              span.icon-list-bullet
+                +icon("solid/check")
+              | Blockchain Development - Foundry, Hardhat, Slither, Aderyn, OpenZeppelin, Chainlink
+            li
+              span.icon-list-bullet
+                +icon("solid/check")
+              | Web3 Technologies - Ethers.js, Viem, Wagmi, Web3.js, IPFS
           .subheading.mt-4.mb-3 Spoken Languages
           ul.icon-list.mb-0
             li
@@ -317,126 +318,69 @@ html(lang="en")
       section#portfolio.resume-section
         .resume-section-content
           h2.mb-5 Portfolio & Open Source
-          //- Thumbnails are 500x300; width/height include the .img-thumbnail padding and border (2 x 5px)
-          //- so the reserved space matches the rendered size.
 
-          .row.mb-4
-            .col-md-6
-              h3.mb-0 Fury Racing
-              p Foundry, Solidity, Chainlink, Next.js, TypeScript, Nodejs, Lambda
-              a(
-                href="https://fury-racing.vercel.app/",
-                target="_blank",
-                rel="noopener noreferrer"
-              )
-                img.mb-2.img-thumbnail(
-                  src="assets/img/fury.webp",
-                  alt="Fury Racing website Thumbnail",
-                  width="510",
-                  height="306",
-                  loading="lazy"
-                )
-              p GitHub: <a href="https://github.com/Pedrojok01/fury-racing">https://github.com/Pedrojok01/fury-racing</a>
-            .col-md-6
-              h3.mb-0 Web3 Boilerplate
-              p Next.js, TypeScript, @web3-react^8, Antd
-              a(
-                href="https://web3-boilerplate.netlify.app",
-                target="_blank",
-                rel="noopener noreferrer"
-              )
-                img.mb-2.img-thumbnail(
-                  src="assets/img/web3_boilerplate.webp",
-                  alt="Web3Boilerplate website Thumbnail",
-                  width="510",
-                  height="306",
-                  loading="lazy"
-                )
-              p GitHub: <a href="https://github.com/Pedrojok01/Web3-Boilerplate">https://github.com/Pedrojok01/Web3-Boilerplate</a>
-
-          .row.mb-4
-            .col-md-6
-              h3.mb-0 PackMyNFT
-              p Foundry, Next.js, TypeScript, Wagmi, Viem, @chakra-ui
-              a(
-                href="https://packmynft.com/",
-                target="_blank",
-                rel="noopener noreferrer"
-              )
-                img.mb-2.img-thumbnail(
-                  src="assets/img/packmynft.webp",
-                  alt="PackMyNFT website Thumbnail",
-                  width="510",
-                  height="306",
-                  loading="lazy"
-                )
-              p GitHub: <a href="https://github.com/Pedrojok01/PackMyNFT">https://github.com/Pedrojok01/PackMyNFT</a>
-            .col-md-6
-              h3.mb-0 Personal Travel Blog
-              p Next.js, TypeScript, Antd, AWS S3
-              a(
-                href="https://www.voyageboost.com/",
-                target="_blank",
-                rel="noopener noreferrer"
-              )
-                img.mb-2.img-thumbnail(
-                  src="assets/img/voyageboost.webp",
-                  alt="Voyageboost.com website Thumbnail",
-                  width="510",
-                  height="306",
-                  loading="lazy"
-                )
-          .row.mb-4
-            .col-md-6
-              h3.mb-0 MoveMyNFT
-              p Hardhat, Next.js, TypeScript, Wagmi, Viem, Antd
-              a(
-                href="https://movemynft.com/",
-                target="_blank",
-                rel="noopener noreferrer"
-              )
-                img.mb-2.img-thumbnail(
-                  src="assets/img/movemynft.webp",
-                  alt="MoveMyNFT website Thumbnail",
-                  width="510",
-                  height="306",
-                  loading="lazy"
-                )
-              p GitHub: <a href="https://github.com/Pedrojok01/MoveMyNFT">https://github.com/Pedrojok01/MoveMyNFT</a>
-            .col-md-6
-              h3.mb-0 CryptoCats
-              p Hardhat, Next.js, TypeScript, Wagmi, @chakra-ui
-              a(
-                href="https://crypto-cats.netlify.app/",
-                target="_blank",
-                rel="noopener noreferrer"
-              )
-                img.mb-2.img-thumbnail(
-                  src="assets/img/cryptocats.webp",
-                  alt="CryptoCats website Thumbnail",
-                  width="510",
-                  height="306",
-                  loading="lazy"
-                )
-              p GitHub: <a href="https://github.com/Pedrojok01/CryptoCats">https://github.com/Pedrojok01/CryptoCats</a>
+          -
+            const projects = [
+              {
+                title: "AuditAgent",
+                desc: "AI pre-audit security scanner for smart contracts, at Nethermind.",
+                stack: "Python, TypeScript, LLM APIs, MCP, Kubernetes, KEDA",
+                url: "https://auditagent.nethermind.io/",
+                img: "auditagent.webp",
+              },
+              {
+                title: "AI Playbook",
+                desc: "A practical guide to using AI well, in products and as a coding tool.",
+                stack: "MkDocs Material, Vercel",
+                url: "https://ai-playbook-gamma.vercel.app/",
+                img: "ai-playbook.webp",
+              },
+              {
+                title: "Fury Racing",
+                stack: "Foundry, Solidity, Chainlink, Next.js, TypeScript, Nodejs, Lambda",
+                url: "https://fury-racing.vercel.app/",
+                img: "fury.webp",
+                repo: "https://github.com/Pedrojok01/fury-racing",
+              },
+              {
+                title: "Web3 Boilerplate",
+                stack: "Next.js, TypeScript, @web3-react^8, Antd",
+                url: "https://web3-boilerplate.netlify.app",
+                img: "web3_boilerplate.webp",
+                repo: "https://github.com/Pedrojok01/Web3-Boilerplate",
+              },
+              {
+                title: "PackMyNFT",
+                stack: "Foundry, Next.js, TypeScript, Wagmi, Viem, @chakra-ui",
+                url: "https://packmynft.com/",
+                img: "packmynft.webp",
+                repo: "https://github.com/Pedrojok01/PackMyNFT",
+              },
+              {
+                title: "Personal Travel Blog",
+                stack: "Next.js, TypeScript, Antd, AWS S3",
+                url: "https://www.voyageboost.com/",
+                img: "voyageboost.webp",
+              },
+              {
+                title: "MoveMyNFT",
+                stack: "Hardhat, Next.js, TypeScript, Wagmi, Viem, Antd",
+                url: "https://movemynft.com/",
+                img: "movemynft.webp",
+                repo: "https://github.com/Pedrojok01/MoveMyNFT",
+              },
+              {
+                title: "CryptoCats",
+                stack: "Hardhat, Next.js, TypeScript, Wagmi, @chakra-ui",
+                url: "https://crypto-cats.netlify.app/",
+                img: "cryptocats.webp",
+                repo: "https://github.com/Pedrojok01/CryptoCats",
+              },
+            ];
 
           .row
-            .col-md-6
-              h3.mb-0 CoinFlip
-              p Hardhat, Chainlink VRF 2.5, React.js, @web3-react^8, @emotion
-              a(
-                href="https://coinflip-double-up-your-eth.netlify.app/",
-                target="_blank",
-                rel="noopener noreferrer"
-              )
-                img.mb-2.img-thumbnail(
-                  src="assets/img/coinflip.webp",
-                  alt="Coinflip website Thumbnail",
-                  width="510",
-                  height="306",
-                  loading="lazy"
-                )
-              p GitHub: <a href="https://github.com/Pedrojok01/CoinFlip_2.0">https://github.com/Pedrojok01/CoinFlip_2.0</a>
+            each p in projects
+              +project(p)
 
       hr.m-0
 
@@ -471,15 +415,11 @@ html(lang="en")
             li
               span.icon-list-bullet
                 +icon("solid/trophy").text-warning
-              | 1
-              sup st
-              | Place - <a href="https://blog.chain.link/block-magic-winners/#gaming_&_consumer_apps_($15_000)">Chainlink Block Magic Hackathon</a> - May 2024
+              | 1#[sup st] Place - <a href="https://blog.chain.link/block-magic-winners/#gaming_&_consumer_apps_($15_000)">Chainlink Block Magic Hackathon</a> - May 2024
             li.mb-3
               span.icon-list-bullet
                 +icon("solid/trophy").text-warning
-              | 2
-              sup nd
-              | Place - <a href="https://moralis.io/cronos-hackathon/">Moralis x Cronos Hackathon</a> - September 2022
+              | 2#[sup nd] Place - <a href="https://moralis.io/cronos-hackathon/">Moralis x Cronos Hackathon</a> - September 2022
 
           .subheading.mb-3 Certifications
           ul.icon-list.mb-0
@@ -490,35 +430,7 @@ html(lang="en")
             li
               span.icon-list-bullet
                 +icon("solid/trophy").text-warning
-              | DeFi 201 - Ivan on Tech Blockchain Academy 2021
-            li
-              span.icon-list-bullet
-                +icon("solid/trophy").text-warning
               | Ethereum Smart-Contract Security - Ivan on Tech Blockchain Academy 2021
-            li
-              span.icon-list-bullet
-                +icon("solid/trophy").text-warning
-              | Ethereum Smart-Contract Programming 201 - Ivan on Tech Blockchain Academy 2021
-            li
-              span.icon-list-bullet
-                +icon("solid/trophy").text-warning
-              | Ethereum Smart-Contract Programming 101 - Ivan on Tech Blockchain Academy 2021
-            li
-              span.icon-list-bullet
-                +icon("solid/trophy").text-warning
-              | React Web Development 101 - Ivan on Tech Blockchain Academy 2021
-            li
-              span.icon-list-bullet
-                +icon("solid/trophy").text-warning
-              | JavaScript Programming - Ivan on Tech Blockchain Academy 2020
-            li
-              span.icon-list-bullet
-                +icon("solid/trophy").text-warning
-              | DeFi 101 - Ivan on Tech Blockchain Academy 2020
-            li
-              span.icon-list-bullet
-                +icon("solid/trophy").text-warning
-              | Bitcoin Attacks - Ivan on Tech Blockchain Academy 2020
 
       hr.m-0
 
@@ -531,12 +443,9 @@ html(lang="en")
             | playing poker in Vegas, diving in Thailand, skydiving in New Zealand, climbing over
             | 6,000 m in Ladakh in Northern India, and going over the polar circle in Norway. I eventually
             | settled in Thailand's countryside, where I enjoy a quiet life with my wife and kids.
-          p
+          p.mb-0
             | Here is my website relating most of my adventures:
             | <a href="https://www.voyageboost.com">https://www.voyageboost.com</a>
-          p.mb-0
-            | Most of my time is now spent following and contributing to the crypto world as I believe that it will be
-            | a game changer in many areas in the coming years.
 
     // Bootstrap JS (same version as the SCSS)
     script(src="js/bootstrap.bundle.min.js")

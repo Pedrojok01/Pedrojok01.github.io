@@ -45,7 +45,7 @@ function prettifyHtml(html) {
     tabWidth: 2,
     endOfLine: "lf",
     parser: "html",
-    htmlWhitespaceSensitivity: "ignore",
+    htmlWhitespaceSensitivity: "css",
   });
 }
 

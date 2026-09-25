@@ -25,3 +25,30 @@ section.resume-section {
     padding-bottom: 5rem;
   }
 }
+
+// Several roles at the same company, shown as a small timeline
+.role-group {
+  $dot-size: 0.625rem;
+  $line-width: 2px;
+
+  margin-left: 0.5rem;
+  padding-left: 1.5rem;
+  border-left: $line-width solid $gray-300;
+  .role {
+    position: relative;
+    &:not(:last-child) {
+      margin-bottom: 1.5rem;
+    }
+    // Dot centered on the line
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0.55rem;
+      left: calc(-1.5rem - #{$line-width * 0.5} - #{$dot-size * 0.5});
+      width: $dot-size;
+      height: $dot-size;
+      border-radius: 50%;
+      background-color: $primary;
+    }
+  }
+}
