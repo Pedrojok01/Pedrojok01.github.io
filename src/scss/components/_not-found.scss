@@ -1,0 +1,29 @@
+// 404 page: the hero's dark ground, one column, full height.
+
+.hero.not-found {
+  min-height: 100vh;
+  min-height: 100svh;
+  align-items: center;
+  padding-block: 80px;
+  > .container {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.home-link {
+  display: inline-flex;
+  align-items: center;
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(170, 181, 201, 0.28);
+  background: rgba(15, 22, 36, 0.4);
+  color: var(--night-text);
+  font-family: var(--mono);
+  font-size: 13px;
+  text-decoration: none;
+  transition: border-color 0.2s;
+  &:hover {
+    border-color: rgba(143, 166, 227, 0.6);
+  }
+}

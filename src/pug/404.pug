@@ -1,0 +1,24 @@
+//- Served by GitHub Pages for any missing path, so local URLs are root-relative.
+//- No noindex: Pages already answers with a 404 status, and Lighthouse CI audits this page too.
+include mixins/head
+
+doctype html
+html(lang="en")
+  head
+    +head("/")
+    meta(
+      name="description",
+      content="This page does not exist. Pierre Estrabaud's portfolio is at pedrojok.com."
+    )
+    title Page not found · Pierre Estrabaud
+
+  body
+    main.hero.not-found
+      .container
+        .hero-content
+          span.eyebrow 404 · NOT FOUND
+          h1 Nothing here.
+          p.intro
+            | This page does not exist, or it has moved. Everything else is on the home page.
+          .hero-actions
+            a.home-link(href="/") ← Back to pedrojok.com

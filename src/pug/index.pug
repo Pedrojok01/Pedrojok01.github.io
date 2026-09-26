@@ -1,6 +1,7 @@
 include mixins/icon
 include mixins/project
 include mixins/contact
+include mixins/head
 
 -
   const site = {
@@ -10,13 +11,6 @@ include mixins/contact
       "Pierre Estrabaud - software engineer and Tech Lead on AuditAgent at Nethermind, working on AI, security and blockchain.",
     image: "https://pedrojok.com/assets/img/og.jpg",
   };
-
-  const fonts = [
-    "schibsted-grotesk-latin-400-normal",
-    "schibsted-grotesk-latin-500-normal",
-    "schibsted-grotesk-latin-800-normal",
-    "ibm-plex-mono-latin-400-normal",
-  ];
 
   const nav = [
     { id: "experience", label: "Experience" },
@@ -100,19 +94,13 @@ include mixins/contact
 doctype html
 html(lang="en")
   head
-    meta(charset="utf-8")
-    meta(
-      name="viewport",
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
-    )
+    +head("")
     meta(name="description", content=site.description)
     meta(name="author", content="Pierre Estrabaud")
-    meta(name="theme-color", content="#0f1624")
 
     title= site.title
 
     link(rel="canonical", href=site.url)
-    link(rel="icon", type="image/x-icon", href="assets/img/favicon.ico")
 
     // Open Graph / social previews
     meta(property="og:type", content="website")
@@ -124,23 +112,6 @@ html(lang="en")
     meta(property="og:image:height", content="630")
     meta(name="twitter:card", content="summary_large_image")
 
-    // Fonts (self-hosted, see src/scss/_fonts.scss): preload the ones used above the fold
-    each font in fonts
-      link(
-        rel="preload",
-        href=`assets/fonts/${font}.woff2`,
-        as="font",
-        type="font/woff2",
-        crossorigin
-      )
-
-    // Apply the saved theme before the first paint (see the theme toggle in main.js)
-    script.
-      try {
-        var t = localStorage.getItem("theme");
-        if (t) document.documentElement.dataset.theme = t;
-      } catch (e) {}
-    link(href=asset("css/styles.css"), rel="stylesheet")
     script(type="module", src=asset("js/main.js"))
 
     // Icons: Font Awesome Free (https://fontawesome.com/license/free), inlined as SVG at build time

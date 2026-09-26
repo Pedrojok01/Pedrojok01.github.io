@@ -10,8 +10,9 @@ const outDir = resolve(rootDir, "dist/js");
  * Bundles src/js/main.js. The 3D scene (and three.js) is a separate chunk,
  * loaded with a dynamic import after the page is readable; chunk names carry
  * a content hash, main.js gets its hash from the asset() helper in the Pug.
+ * Source maps only for the dev watcher, so they are not deployed.
  */
-export async function renderScripts() {
+export async function renderScripts({ sourcemap = false } = {}) {
   try {
     await rm(outDir, { recursive: true, force: true });
     await build({
@@ -23,7 +24,7 @@ export async function renderScripts() {
       target: "es2022",
       minify: true,
       legalComments: "none",
-      sourcemap: "linked",
+      sourcemap: sourcemap && "linked",
       chunkNames: "chunks/[name]-[hash]",
       logLevel: "warning",
     });

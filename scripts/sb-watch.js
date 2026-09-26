@@ -28,6 +28,7 @@ watcher
     READY = true;
     console.log(" READY TO ROLL!");
     renderSCSS();
+    renderScripts({ sourcemap: true });
   });
 
 function processFile(filePath, watchEvent) {
@@ -43,7 +44,7 @@ function processFile(filePath, watchEvent) {
 
   if (PUG_REGEX.test(filePath)) return handlePug(filePath, watchEvent);
   if (SCSS_REGEX.test(filePath) && watchEvent === "change") return renderSCSS();
-  if (JS_REGEX.test(filePath)) return renderScripts();
+  if (JS_REGEX.test(filePath)) return renderScripts({ sourcemap: true });
   if (ASSETS_REGEX.test(filePath)) return renderAssets();
 }
 

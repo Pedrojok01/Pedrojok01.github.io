@@ -29,12 +29,13 @@ Set `CHROME_PATH` if Chrome is not at `/usr/bin/google-chrome` when running `og-
 ```
 src/
   pug/index.pug        page content and data (projects, skills, nav)
-  pug/mixins/          icon, project card, contact links
+  pug/404.pug          not-found page, served by GitHub Pages at any missing path
+  pug/mixins/          shared head tags, icon, project card, contact links
   scss/                tokens (light/dark colors), base styles, one partial per component
   js/main.js           nav, theme toggle, mobile menu, copy email, lazy-loads the scene
   js/scene.js          the three.js hero scene
-  assets/              images and favicon, copied to dist/assets
-  public/              robots.txt and sitemap.xml, copied to the dist root
+  assets/              images, copied to dist/assets
+  public/              favicons, robots.txt and sitemap.xml, copied to the dist root
 scripts/               build steps (Pug, Sass, esbuild, assets), watcher and dev server
 ```
 
