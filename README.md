@@ -3,7 +3,7 @@
 Source of [pedrojok.com](https://pedrojok.com), the portfolio and resume of Pierre Estrabaud.
 
 A single static page: Pug for the markup, Sass for the styles, and a small three.js scene for the hero
-(a code graph swept by a scanner). No framework, no runtime dependencies beyond the bundled scripts.
+(a brain-like graph swept by a scanner). No framework, no runtime dependencies beyond the bundled scripts.
 
 ## Requirements
 
